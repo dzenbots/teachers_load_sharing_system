@@ -1,2 +1,2 @@
-# teachers_load_sharing_system_
+# teachers_load_sharing_system
 Система распределения нагрузки педагогов
