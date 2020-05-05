@@ -10,7 +10,7 @@ class BaseModel(Model):
 
 
 class StudyLevels(BaseModel):
-    name = CharField(max_length=255, unique=True)
+    name = CharField(max_length=255)
 
 
 class Parallels(BaseModel):
