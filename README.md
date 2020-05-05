@@ -14,7 +14,7 @@
         git clone https://github.com/dzenbots/teachers_load_sharing_system.git
     ```
     
-    1.4. Создать файл ***.env*** со следующим содержанием
+    1.4. Создать в папке проекта файл ***.env*** со следующим содержанием
     ```.env
         SECRET_KEY = 'Thisisasecretkey'
         DB_FILE_PATH = 'base.db'
