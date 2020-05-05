@@ -1,8 +1,11 @@
 from flask import Blueprint, render_template, request, session, redirect, url_for
-from . import login_user, check_user_valid
+from app.login_app import check_user_valid, login_user
 
-
-login_app = Blueprint("login_app", __name__, static_folder="static", template_folder="templates", url_prefix="/login_app")
+login_app = Blueprint("login_app",
+                      __name__,
+                      static_folder="static",
+                      template_folder="templates",
+                      url_prefix="/login_app")
 
 
 @login_app.route("/")
