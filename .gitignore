@@ -3,4 +3,4 @@ env
 *__py_cache__
 .idea/*
 .env
-.db
+*.db

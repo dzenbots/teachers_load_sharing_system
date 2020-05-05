@@ -1,7 +1,7 @@
 from peewee import Model, CharField, IntegerField, ForeignKeyField, PrimaryKeyField, SqliteDatabase
 from .settings import DB_FILE_PATH
 
-db = SqliteDatabase(DB_FILE_PATH)
+db = SqliteDatabase(None)
 
 
 class BaseModel(Model):
@@ -10,7 +10,7 @@ class BaseModel(Model):
 
 
 class StudyLevels(BaseModel):
-    name = CharField(max_length=255)
+    name = CharField(max_length=255, unique=True)
 
 
 class Parallels(BaseModel):
@@ -81,6 +81,7 @@ def initialize_db():
     noo = StudyLevels.create(name='НОО')
     ooo = StudyLevels.create(name='ООО')
     coo = StudyLevels.create(name='СОО')
+
     for i in range(1, 5):
         Parallels.insert(name=i, level=noo).execute()
     for i in range(5, 10):

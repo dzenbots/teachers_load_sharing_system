@@ -1,13 +1,17 @@
-from flask import Flask, render_template, session
+from flask import Flask, render_template
 from app.views import main
 from app.login_app.views import login_app
 from app.subjects_app.views import subjects_app
+from app.models import db
 
 
 def create_app(config_file='settings.py'):
 
     app = Flask(__name__)
     app.config.from_pyfile(config_file)
+
+    db.init(database=app.config.get('DB_FILE_PATH'))
+
     app.register_blueprint(main)
     app.register_blueprint(login_app)
     app.register_blueprint(subjects_app)

@@ -1,6 +1,5 @@
 from flask import session
 
-
 admin_users = [
     dict(
         login='admin', password="@dm!n"
