@@ -30,4 +30,4 @@ def logout():
         session.pop('valid_user')
     if 'login' in session:
         session.pop('login')
-    return redirect(url_for('index'))
+    return redirect(url_for('main.index'))
