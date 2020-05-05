@@ -10,12 +10,9 @@ login_app = Blueprint("login_app",
 
 @login_app.route("/")
 @login_app.route("/login")
+@check_user_valid
 def login():
-    if check_user_valid():
-        return redirect(url_for('main.index'))
-    else:
-        return render_template("login_app.html",
-                               message=session.pop('login_message') if 'login_message' in session else None)
+    return redirect(url_for('main.index'))
 
 
 @login_app.route("/login", methods=['POST'])
@@ -28,9 +25,8 @@ def on_login():
 
 
 @login_app.route("/logout")
+@check_user_valid
 def logout():
-    if 'valid_user' in session:
-        session.pop('valid_user')
-    if 'login' in session:
-        session.pop('login')
+    session.pop('valid_user')
+    session.pop('login')
     return redirect(url_for('main.index'))

@@ -1,4 +1,7 @@
-from flask import session
+from functools import wraps
+
+from flask import session, url_for, render_template
+from werkzeug.utils import redirect
 
 admin_users = [
     dict(
@@ -24,7 +27,13 @@ def login_user(user_login, password):
                 return True
 
 
-def check_user_valid():
-    if 'valid_user' in session:
-        return session.get('valid_user')
-    return False
+def check_user_valid(original_function):
+
+    @wraps(original_function)
+    def wrapper(*args, **kwargs):
+        if 'valid_user' in session:
+            return original_function(*args, **kwargs)
+        return render_template("login_app.html",
+                               message=session.pop('login_message') if 'login_message' in session else None)
+
+    return wrapper
