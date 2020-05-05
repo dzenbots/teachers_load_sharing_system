@@ -1,4 +1,5 @@
 venv
+env
 *__py_cache__
 .idea/*
-env
+.env
