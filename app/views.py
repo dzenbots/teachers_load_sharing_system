@@ -1,6 +1,6 @@
 from functools import wraps
 
-from flask import Blueprint, session, render_template, url_for
+from flask import Blueprint, session, url_for, render_template
 from werkzeug.utils import redirect
 
 from app.models import initialize_db, db

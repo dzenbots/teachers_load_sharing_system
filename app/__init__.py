@@ -3,7 +3,6 @@ from app.views import main
 from app.login_app.views import login_app
 from app.subjects_app.views import subjects_app
 from app.models import db
-from functools import wraps
 
 
 def create_app(config_file='settings.py'):
