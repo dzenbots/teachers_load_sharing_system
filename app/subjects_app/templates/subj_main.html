@@ -8,36 +8,40 @@
                         <div class="container-fluid">
                             <div class="subjects_main_container">
                                 {% if subjects %}
-                                <table class="table table-bordered">
+                                <table class="table table-striped">
                                     {% if table_info %}
-                                    <tr>
-                                        {% for item in range(1, table_info|length) %}
-                                        <th scope="col">
-                                            {{ table_info[item] }}
-                                        </th>
-                                        {% endfor %}
-                                    </tr>
-                                    {% endif %}
-                                        {% for subject in subjects %}
+                                        <thead class="thead-dark">
                                             <tr>
-                                                <td scope="col justify-content-center">
-                                                    <form   id='subjects_form'
-                                                            action="/subjects_app/update_record/{{ subject.id }}"
-                                                            method="post"
-                                                            class="justify-content-center"
-                                                            target="subjects_hidden_iframe"
-                                                            >
-                                                            <input  type="text"
-                                                                    name="{{ 'id_{}'.format(subject.id) }}"
-                                                                    class="form-control"
-                                                                    value="{{ subject.name }}"
-                                                                    onchange="submit()"
-                                                                    required
-                                                            >
-                                                    </form>
-                                                </td>
-                                        {% endfor %}
+                                                {% for item in range(1, table_info|length) %}
+                                                <th scope="col">
+                                                    {{ table_info[item] }}
+                                                </th>
+                                                {% endfor %}
+                                            </tr>
+                                        </thead>
+                                    {% endif %}
+                                        <tbody>
+                                            {% for subject in subjects %}
+                                                <tr>
+                                                    <td scope="col justify-content-center">
+                                                        <form   id='subjects_form'
+                                                                action="/subjects_app/update_record/{{ subject.id }}"
+                                                                method="post"
+                                                                class="justify-content-center"
+                                                                target="subjects_hidden_iframe"
+                                                                >
+                                                                <input  type="text"
+                                                                        name="{{ 'id_{}'.format(subject.id) }}"
+                                                                        class="form-control no-border"
+                                                                        value="{{ subject.name }}"
+                                                                        onchange="submit()"
+                                                                        required
 
+                                                                >
+                                                        </form>
+                                                    </td>
+                                            {% endfor %}
+                                        </tbody>
                                 </table>
                                 {% endif %}
                             </div>
@@ -61,7 +65,7 @@
                         <form id='add_new_record' action="/subjects_app/add_new_record" method="post" class="justify-content-center">
                             <table>
                                 <tr>
-                                    <input type="text" name="subject_add_new" class="form-control subjects_adding_tr" placeholder="Название предмета" required autofocus>
+                                    <input type="text" name="subject_add_new" class="form-control subjects_adding_tr" placeholder="Название предмета" required>
                                 </tr>
                             </table>
                         </form>
