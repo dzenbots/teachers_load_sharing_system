@@ -1,0 +1,7 @@
+{% if 'valid_user' in session %}
+    <footer>
+        <div class="main_footer">
+            <div>Пользователь: {{ session.get('login') }} <a href="/login_app/logout" class="btn btn-secondary" role="button" style="margin-left: 20px;">Выход</a></div>
+        </div>
+    </footer>
+{% endif %}
