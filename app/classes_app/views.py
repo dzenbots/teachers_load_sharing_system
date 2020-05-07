@@ -32,18 +32,18 @@ def show_classes():
 @check_user_valid
 def add_new_class():
     Classes.create(name=request.form.get('ClassName'),
-                   level=request.form.get('Level'),
                    parallel=Parallels.select().where(Parallels.name == request.form.get('Parallel')),
                    max_hours=request.form.get('max_hours'),
                    students_num=request.form.get('students_num'))
     return redirect(url_for('classes_app.show_classes'))
 
 
-@classes_app.route('/update_record/<record_id>', methods=['POST'])
+@classes_app.route('/update_class/<record_id>', methods=['POST'])
 @check_user_valid
 def update_db_record(record_id):
     Classes.update(name=request.form.get('id_{}_{}'.format(record_id, classes_row_table_head[1])),
-                   parallel=request.form.get('id_{}_{}'.format(record_id, classes_row_table_head[2])),
-                   level=request.form.get('id_{}_{}'.format(record_id, classes_row_table_head[3]))) \
+                   parallel=Parallels.select().where(Parallels.name == request.form.get('id_{}_{}'.format(record_id, classes_row_table_head[2]))),
+                   max_hours=request.form.get('id_{}_{}'.format(record_id, classes_row_table_head[3])),
+                   students_num=request.form.get('id_{}_{}'.format(record_id, classes_row_table_head[4]))) \
         .where(Classes.id == record_id).execute()
-    response = Response(status=200)
+    return Response(status=200)
