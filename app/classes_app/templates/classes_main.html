@@ -11,58 +11,66 @@
                                     <h2>Начальное общее образование</h2>
                                     <table class="table table-bordered">
                                         {% if table_info %}
+                                        <thead class="thead-dark">
                                         <tr>
                                             {% for item in range(1, table_info|length) %}
-                                            <th scope="col">
+                                            <th scope="col" class="justify-content-center">
                                                 {{ table_info[item] }}
                                             </th>
                                             {% endfor %}
                                         </tr>
+                                        </thead>
                                         {% endif %}
+                                        <tbody>
                                         {% for record in data_HOO %}
                                             <tr>
                                                 <form   id="{{ 'classes_table_form_{}'.format(record.id) }}"
-                                                            action="/classes_app/update_record/{{ record.id }}"
+                                                            action="/classes_app/update_class/{{ record.id }}"
                                                             method="post"
                                                             class="justify-content-center"
                                                             target="classes_hidden_iframe"
                                                 >
                                                     <td scope="col">
-                                                        <div class="form-group">
+
                                                             <input  type="text"
                                                                     name="{{ 'id_{}_{}'.format(record.id, row_table_info[1]) }}"
-                                                                    class="form-control"
+                                                                    class="form-control no-border"
                                                                     value="{{ record.name }}"
                                                                     onchange="submit()"
                                                                     required
                                                                 >
-                                                        </div>
                                                     </td>
-                                                    <td>
-                                                        <div class="form-group">
+                                                    <td scope="col">
                                                             <input  type="text"
                                                                     name="{{ 'id_{}_{}'.format(record.id, row_table_info[2]) }}"
-                                                                    class="form-control"
+                                                                    class="form-control no-border"
                                                                     value="{{ record.parallel }}"
                                                                     onchange="submit()"
                                                                     required
                                                             >
-                                                        </div>
                                                     </td>
-                                                    <td>
-                                                        <div class="form-group">
+                                                    <td scope="col">
                                                             <input  type="text"
                                                                     name="{{ 'id_{}_{}'.format(record.id, row_table_info[3]) }}"
-                                                                    class="form-control"
-                                                                    value="{{ record.level }}"
+                                                                    class="form-control no-border"
+                                                                    value="{{ record.max_hours }}"
                                                                     onchange="submit()"
                                                                     required
                                                             >
-                                                        </div>
+                                                    </td>
+                                                    <td scope="col">
+                                                            <input  type="text"
+                                                                    name="{{ 'id_{}_{}'.format(record.id, row_table_info[4]) }}"
+                                                                    class="form-control no-border"
+                                                                    value="{{ record.students_num }}"
+                                                                    onchange="submit()"
+                                                                    required
+                                                            >
                                                     </td>
                                                 </form>
                                             </tr>
                                         {% endfor %}
+                                        </tbody>
                                     </table>
                                 {% endif %}
                             </div>
@@ -75,6 +83,7 @@
                                     <h2>Основное общее образование</h2>
                                     <table class="table table-bordered">
                                         {% if table_info %}
+                                        <thead class="thead-dark">
                                         <tr>
                                             {% for item in range(1, table_info|length) %}
                                             <th scope="col" class="justify-content-center">
@@ -82,11 +91,13 @@
                                             </th>
                                             {% endfor %}
                                         </tr>
+                                        </thead>
                                         {% endif %}
+                                        <tbody>
                                         {% for record in data_OOO %}
                                             <tr>
                                                 <form   id="{{ 'classes_table_form_{}'.format(record.id) }}"
-                                                            action="/classes_app/update_record/{{ record.id }}"
+                                                            action="/classes_app/update_class/{{ record.id }}"
                                                             method="post"
                                                             class="justify-content-center"
                                                             target="classes_hidden_iframe"
@@ -95,7 +106,7 @@
                                                         
                                                             <input  type="text"
                                                                     name="{{ 'id_{}_{}'.format(record.id, row_table_info[1]) }}"
-                                                                    class="form-control"
+                                                                    class="form-control no-border"
                                                                     value="{{ record.name }}"
                                                                     onchange="submit()"
                                                                     required
@@ -104,7 +115,7 @@
                                                     <td scope="col">
                                                             <input  type="text"
                                                                     name="{{ 'id_{}_{}'.format(record.id, row_table_info[2]) }}"
-                                                                    class="form-control"
+                                                                    class="form-control no-border"
                                                                     value="{{ record.parallel }}"
                                                                     onchange="submit()"
                                                                     required
@@ -113,8 +124,17 @@
                                                     <td scope="col">
                                                             <input  type="text"
                                                                     name="{{ 'id_{}_{}'.format(record.id, row_table_info[3]) }}"
-                                                                    class="form-control"
-                                                                    value="{{ record.level }}"
+                                                                    class="form-control no-border"
+                                                                    value="{{ record.max_hours }}"
+                                                                    onchange="submit()"
+                                                                    required
+                                                            >
+                                                    </td>
+                                                    <td scope="col">
+                                                            <input  type="text"
+                                                                    name="{{ 'id_{}_{}'.format(record.id, row_table_info[4]) }}"
+                                                                    class="form-control no-border"
+                                                                    value="{{ record.students_num }}"
                                                                     onchange="submit()"
                                                                     required
                                                             >
@@ -122,6 +142,7 @@
                                                 </form>
                                             </tr>
                                         {% endfor %}
+                                        </tbody>
                                     </table>
                                 {% endif %}
                             </div>
@@ -134,36 +155,39 @@
                                     <h2>Среднее общее образование</h2>
                                     <table class="table table-bordered">
                                         {% if table_info %}
+                                        <thead class="thead-dark">
                                         <tr>
                                             {% for item in range(1, table_info|length) %}
-                                            <th scope="col">
+                                            <th scope="col" class="justify-content-center">
                                                 {{ table_info[item] }}
                                             </th>
                                             {% endfor %}
                                         </tr>
+                                        </thead>
                                         {% endif %}
+                                        <tbody>
                                         {% for record in data_COO %}
                                             <tr>
                                                 <form   id="{{ 'classes_table_form_{}'.format(record.id) }}"
-                                                            action="/classes_app/update_record/{{ record.id }}"
+                                                            action="/classes_app/update_class/{{ record.id }}"
                                                             method="post"
                                                             class="justify-content-center"
                                                             target="classes_hidden_iframe"
                                                 >
                                                     <td scope="col">
+
                                                             <input  type="text"
                                                                     name="{{ 'id_{}_{}'.format(record.id, row_table_info[1]) }}"
-                                                                    class="form-control"
+                                                                    class="form-control no-border"
                                                                     value="{{ record.name }}"
                                                                     onchange="submit()"
                                                                     required
                                                                 >
-                                                        </div>
                                                     </td>
                                                     <td scope="col">
                                                             <input  type="text"
                                                                     name="{{ 'id_{}_{}'.format(record.id, row_table_info[2]) }}"
-                                                                    class="form-control"
+                                                                    class="form-control no-border"
                                                                     value="{{ record.parallel }}"
                                                                     onchange="submit()"
                                                                     required
@@ -172,8 +196,17 @@
                                                     <td scope="col">
                                                             <input  type="text"
                                                                     name="{{ 'id_{}_{}'.format(record.id, row_table_info[3]) }}"
-                                                                    class="form-control"
-                                                                    value="{{ record.level }}"
+                                                                    class="form-control no-border"
+                                                                    value="{{ record.max_hours }}"
+                                                                    onchange="submit()"
+                                                                    required
+                                                            >
+                                                    </td>
+                                                    <td scope="col">
+                                                            <input  type="text"
+                                                                    name="{{ 'id_{}_{}'.format(record.id, row_table_info[4]) }}"
+                                                                    class="form-control no-border"
+                                                                    value="{{ record.students_num }}"
                                                                     onchange="submit()"
                                                                     required
                                                             >
@@ -181,6 +214,7 @@
                                                 </form>
                                             </tr>
                                         {% endfor %}
+                                        </tbody>
                                     </table>
                                 {% endif %}
                             </div>
@@ -200,24 +234,60 @@
                     </div>
                     <!-- Основное содержимое модального окна -->
                     <div class="modal-body">
-                        <form id='add_new_record' action="/classes_app/add_new_record" method="post" class="justify-content-center">
-                            <table>
-                                <tr>
-                                    <input type="text" name="ClassName" class="form-control classes_adding_tr" placeholder="Название класса" required autofocus>
-                                </tr>
-                                <tr>
-                                    <input type="text" name="Parallel" class="form-control classes_adding_tr" placeholder="Параллель" required>
-                                </tr>
-                                <tr>
-                                    <input type="text" name="Level" class="form-control classes_adding_tr" placeholder="Уровень образования" required>
-                                </tr>
+                        <form id='add_new_class'
+                              action="/classes_app/add_new_class"
+                              method="post"
+                              class="justify-content-center">
+                            <table class="table table-bordered">
+                                <tbody>
+                                    <tr>
+                                        <td scope="col">
+                                            <input type="text"
+                                                   name="ClassName"
+                                                   class="form-control no-border"
+                                                   placeholder="Название класса"
+                                                   required
+                                            >
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td scope="col">
+                                            <input type="text"
+                                                   name="Parallel"
+                                                   class="form-control no-border"
+                                                   placeholder="Параллель"
+                                                   required
+                                            >
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td scope="col">
+                                            <input type="text"
+                                                   name="max_hours"
+                                                   class="form-control no-border"
+                                                   placeholder="Количество часов"
+                                                   required
+                                            >
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td scope="col">
+                                            <input type="text"
+                                                   name="students_num"
+                                                   class="form-control no-border"
+                                                   placeholder="Количество обучающихся"
+                                                   required
+                                            >
+                                        </td>
+                                    </tr>
+                                </tbody>
                             </table>
                         </form>
                     </div>
                     <!-- Футер модального окна -->
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Закрыть</button>
-                        <button form="add_new_record" type="submit" class="btn btn-primary">Сохранить</button>
+                        <button form="add_new_class" type="submit" class="btn btn-primary">Сохранить</button>
                     </div>
                 </div>
             </div>
