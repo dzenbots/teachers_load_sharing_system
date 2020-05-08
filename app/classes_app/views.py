@@ -1,5 +1,4 @@
 from flask import Blueprint, render_template, url_for, request, redirect, Response
-from peewee import DoesNotExist
 
 from app.classes_app import classes_table_head, classes_row_table_head, check_user_valid, classes_levels
 from app.models import Classes, Parallels, StudyLevels
@@ -47,9 +46,11 @@ def show_classes():
 @classes_app.route('/add_new_class', methods=['POST'])
 @check_user_valid
 def add_new_class():
-    Classes.get_or_create(name=request.form.get('ClassName'),
-                          parallel=Parallels.select().where(Parallels.name == request.form.get('Parallel')),
-                          students_num=request.form.get('students_num'))
+    class_name = request.form.get('ClassName')
+    if Classes.select().where(Classes.name == class_name).count() == 0:
+        Classes.get_or_create(name=request.form.get('ClassName'),
+                              parallel=Parallels.select().where(Parallels.name == request.form.get('Parallel')),
+                              students_num=request.form.get('students_num'))
     return redirect(url_for('classes_app.show_classes'))
 
 
