@@ -56,15 +56,9 @@ def add_new_class():
 @classes_app.route('/update_class/<record_id>', methods=['POST'])
 @check_user_valid
 def update_db_record(record_id):
-    try:
-        Classes.get(Classes.name == request.form.get('id_{}_{}'.format(record_id, classes_row_table_head[1])),
-                    Classes.parallel == Parallels.get(
-                        Parallels.name == request.form.get('id_{}_{}'.format(record_id, classes_row_table_head[2]))),
-                    Classes.students_num == request.form.get('id_{}_{}'.format(record_id, classes_row_table_head[3])))
-    except DoesNotExist:
-        Classes.update(name=request.form.get('id_{}_{}'.format(record_id, classes_row_table_head[1])),
-                       parallel=Parallels.select().where(
-                           Parallels.name == request.form.get('id_{}_{}'.format(record_id, classes_row_table_head[2]))),
-                       students_num=request.form.get('id_{}_{}'.format(record_id, classes_row_table_head[3]))) \
-            .where(Classes.id == record_id).execute()
+    Classes.update(name=request.form.get('id_{}_{}'.format(record_id, classes_row_table_head[1])),
+                   parallel=Parallels.select().where(
+                       Parallels.name == request.form.get('id_{}_{}'.format(record_id, classes_row_table_head[2]))),
+                   students_num=request.form.get('id_{}_{}'.format(record_id, classes_row_table_head[3]))) \
+        .where(Classes.id == record_id).execute()
     return Response(status=200)
