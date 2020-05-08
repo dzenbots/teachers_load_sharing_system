@@ -1,4 +1,5 @@
 from flask import Blueprint, render_template, url_for, request, redirect, Response
+from peewee import DoesNotExist
 
 from app.classes_app import classes_table_head, classes_row_table_head, check_user_valid, classes_levels
 from app.models import Classes, Parallels, StudyLevels
@@ -46,20 +47,24 @@ def show_classes():
 @classes_app.route('/add_new_class', methods=['POST'])
 @check_user_valid
 def add_new_class():
-    Classes.create(name=request.form.get('ClassName'),
-                   parallel=Parallels.select().where(Parallels.name == request.form.get('Parallel')),
-                   # max_hours=request.form.get('max_hours'),
-                   students_num=request.form.get('students_num'))
+    Classes.get_or_create(name=request.form.get('ClassName'),
+                          parallel=Parallels.select().where(Parallels.name == request.form.get('Parallel')),
+                          students_num=request.form.get('students_num'))
     return redirect(url_for('classes_app.show_classes'))
 
 
 @classes_app.route('/update_class/<record_id>', methods=['POST'])
 @check_user_valid
 def update_db_record(record_id):
-    Classes.update(name=request.form.get('id_{}_{}'.format(record_id, classes_row_table_head[1])),
-                   parallel=Parallels.select().where(
-                       Parallels.name == request.form.get('id_{}_{}'.format(record_id, classes_row_table_head[2]))),
-                   # max_hours=request.form.get('id_{}_{}'.format(record_id, classes_row_table_head[3])),
-                   students_num=request.form.get('id_{}_{}'.format(record_id, classes_row_table_head[4]))) \
-        .where(Classes.id == record_id).execute()
+    try:
+        Classes.get(Classes.name == request.form.get('id_{}_{}'.format(record_id, classes_row_table_head[1])),
+                    Classes.parallel == Parallels.get(
+                        Parallels.name == request.form.get('id_{}_{}'.format(record_id, classes_row_table_head[2]))),
+                    Classes.students_num == request.form.get('id_{}_{}'.format(record_id, classes_row_table_head[3])))
+    except DoesNotExist:
+        Classes.update(name=request.form.get('id_{}_{}'.format(record_id, classes_row_table_head[1])),
+                       parallel=Parallels.select().where(
+                           Parallels.name == request.form.get('id_{}_{}'.format(record_id, classes_row_table_head[2]))),
+                       students_num=request.form.get('id_{}_{}'.format(record_id, classes_row_table_head[3]))) \
+            .where(Classes.id == record_id).execute()
     return Response(status=200)
