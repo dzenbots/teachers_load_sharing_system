@@ -13,12 +13,27 @@ classes_app = Blueprint('classes_app',
 @classes_app.route('/')
 @check_user_valid
 def show_classes():
-    noo_classes = Classes.select().join(Parallels).join(StudyLevels).where(
-        StudyLevels.name == classes_levels.get('HOO')).order_by(Classes.name)
-    ooo_classes = Classes.select().join(Parallels).join(StudyLevels).where(
-        StudyLevels.name == classes_levels.get('OOO')).order_by(Classes.name)
-    coo_classes = Classes.select().join(Parallels).join(StudyLevels).where(
-        StudyLevels.name == classes_levels.get('COO')).order_by(Classes.name)
+    noo_classes = []
+    ooo_classes = []
+    coo_classes = []
+    for parallel in StudyLevels.get(StudyLevels.name == classes_levels.get('HOO')).level_parallels:
+        for noo_class in parallel.classes_parallel:
+            noo_classes.append(noo_class)
+
+    for parallel in StudyLevels.get(StudyLevels.name == classes_levels.get('OOO')).level_parallels:
+        for ooo_class in parallel.classes_parallel:
+            ooo_classes.append(ooo_class)
+
+    for parallel in StudyLevels.get(StudyLevels.name == classes_levels.get('COO')).level_parallels:
+        for coo_class in parallel.classes_parallel:
+            coo_classes.append(coo_class)
+
+    # noo_classes = Classes.select().join(Parallels).join(StudyLevels).where(
+    #     StudyLevels.name == classes_levels.get('HOO')).order_by(Classes.name)
+    # ooo_classes = Classes.select().join(Parallels).join(StudyLevels).where(
+    #     StudyLevels.name == classes_levels.get('OOO')).order_by(Classes.name)
+    # coo_classes = Classes.select().join(Parallels).join(StudyLevels).where(
+    #     StudyLevels.name == classes_levels.get('COO')).order_by(Classes.name)
     return render_template('classes_app.html',
                            table_info=classes_table_head,
                            row_table_info=classes_row_table_head,
@@ -33,7 +48,7 @@ def show_classes():
 def add_new_class():
     Classes.create(name=request.form.get('ClassName'),
                    parallel=Parallels.select().where(Parallels.name == request.form.get('Parallel')),
-                   max_hours=request.form.get('max_hours'),
+                   # max_hours=request.form.get('max_hours'),
                    students_num=request.form.get('students_num'))
     return redirect(url_for('classes_app.show_classes'))
 
@@ -42,8 +57,9 @@ def add_new_class():
 @check_user_valid
 def update_db_record(record_id):
     Classes.update(name=request.form.get('id_{}_{}'.format(record_id, classes_row_table_head[1])),
-                   parallel=Parallels.select().where(Parallels.name == request.form.get('id_{}_{}'.format(record_id, classes_row_table_head[2]))),
-                   max_hours=request.form.get('id_{}_{}'.format(record_id, classes_row_table_head[3])),
+                   parallel=Parallels.select().where(
+                       Parallels.name == request.form.get('id_{}_{}'.format(record_id, classes_row_table_head[2]))),
+                   # max_hours=request.form.get('id_{}_{}'.format(record_id, classes_row_table_head[3])),
                    students_num=request.form.get('id_{}_{}'.format(record_id, classes_row_table_head[4]))) \
         .where(Classes.id == record_id).execute()
     return Response(status=200)

@@ -8,7 +8,7 @@ from app.models import Classes, Parallels, StudyLevels
 classes_aliases = {
     "name": "Название класса",
     "parallel": "Параллель",
-    "max_hours": "Макс. часов",
+    # "max_hours": "Макс. часов",
     "students_num": "Количество учеников"
 }
 
