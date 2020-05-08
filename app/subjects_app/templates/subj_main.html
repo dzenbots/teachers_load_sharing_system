@@ -23,23 +23,24 @@
                                         <tbody>
                                             {% for subject in subjects %}
                                                 <tr>
-                                                    <td scope="col justify-content-center">
-                                                        <form   id='subjects_form'
+                                                    <form   id='subjects_form'
                                                                 action="/subjects_app/update_record/{{ subject.id }}"
                                                                 method="post"
                                                                 class="justify-content-center"
                                                                 target="subjects_hidden_iframe"
                                                                 >
-                                                                <input  type="text"
-                                                                        name="{{ 'id_{}'.format(subject.id) }}"
-                                                                        class="form-control no-border"
-                                                                        value="{{ subject.name }}"
-                                                                        onchange="submit()"
-                                                                        required
+                                                        <td scope="col justify-content-center">
 
-                                                                >
-                                                        </form>
-                                                    </td>
+                                                                    <input  type="text"
+                                                                            name="{{ 'id_{}'.format(subject.id) }}"
+                                                                            class="form-control no-border"
+                                                                            value="{{ subject.name }}"
+                                                                            onchange="submit()"
+                                                                            required
+
+                                                                    >
+                                                        </td>
+                                                    </form>
                                             {% endfor %}
                                         </tbody>
                                 </table>
@@ -62,10 +63,19 @@
                     </div>
                     <!-- Основное содержимое модального окна -->
                     <div class="modal-body">
-                        <form id='add_new_record' action="/subjects_app/add_new_record" method="post" class="justify-content-center">
-                            <table>
+                        <form id='add_new_record'
+                              action="/subjects_app/add_new_record"
+                              method="post"
+                              class="justify-content-center">
+                            <table class="table table-bordered">
                                 <tr>
-                                    <input type="text" name="subject_add_new" class="form-control subjects_adding_tr" placeholder="Название предмета" required>
+                                    <td scope="col">
+                                        <input type="text"
+                                               name="subject_add_new"
+                                               class="form-control no-border"
+                                               placeholder="Название предмета"
+                                               required>
+                                    </td>
                                 </tr>
                             </table>
                         </form>
