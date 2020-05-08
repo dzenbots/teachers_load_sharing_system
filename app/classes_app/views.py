@@ -14,11 +14,11 @@ classes_app = Blueprint('classes_app',
 @check_user_valid
 def show_classes():
     noo_classes = Classes.select().join(Parallels).join(StudyLevels).where(
-        StudyLevels.name == classes_levels.get('HOO'))
+        StudyLevels.name == classes_levels.get('HOO')).order_by(Classes.name)
     ooo_classes = Classes.select().join(Parallels).join(StudyLevels).where(
-        StudyLevels.name == classes_levels.get('OOO'))
+        StudyLevels.name == classes_levels.get('OOO')).order_by(Classes.name)
     coo_classes = Classes.select().join(Parallels).join(StudyLevels).where(
-        StudyLevels.name == classes_levels.get('COO'))
+        StudyLevels.name == classes_levels.get('COO')).order_by(Classes.name)
     return render_template('classes_app.html',
                            table_info=classes_table_head,
                            row_table_info=classes_row_table_head,
