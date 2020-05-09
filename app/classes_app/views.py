@@ -1,13 +1,30 @@
-from flask import Blueprint, render_template, url_for, request, redirect, Response
+from flask import Blueprint, render_template, url_for, request, redirect, Response, current_app
 
 from app.classes_app import classes_table_head, classes_row_table_head, check_user_valid, classes_levels
-from app.models import Classes, Parallels, StudyLevels
+from app.classes_app.models import Classes, Parallels, StudyLevels, db, initialize_db
+
 
 classes_app = Blueprint('classes_app',
                         __name__,
                         static_folder='static',
                         template_folder='templates',
                         url_prefix='/classes_app')
+
+
+@classes_app.before_request
+def classes_before_request():
+    db.init(database=current_app.config.get('DB_FILE_PATH'))
+    initialize_db()
+
+
+# @classes_app.after_request
+# def classes_after_request():
+#     db.close()
+
+
+@classes_app.teardown_request
+def classes_teardown_request():
+    db.close()
 
 
 @classes_app.route('/')

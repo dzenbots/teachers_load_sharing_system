@@ -1,12 +1,24 @@
-from flask import Blueprint, render_template, url_for, session, request, redirect, Response
-
-from app.models import Subjects
+from flask import Blueprint, render_template, url_for, request, redirect, Response, g
+import flask
 from app.subjects_app import subjects_table_head, check_user_valid
+from app.subjects_app.models import Subjects, db, initialize_db
 
 subjects_app = Blueprint('subjects_app', __name__,
                          static_folder='static',
                          template_folder='templates',
                          url_prefix='/subjects_app')
+
+db.init(flask.g.database)
+
+
+@subjects_app.before_request
+def subjects_before_request():
+    db.connect()
+
+
+@subjects_app.teardown_request
+def classes_teardown_request():
+    db.close()
 
 
 @subjects_app.route('/')

@@ -3,7 +3,11 @@ from functools import wraps
 from flask import session, url_for
 from werkzeug.utils import redirect
 
-from app.models import Subjects, Classes
+from app.subjects_app.models import Subjects, db, initialize_db
+
+# db.init(database=current_app.config.get('DB_FILE_PATH'))
+# initialize_db()
+# db.close()
 
 subject_aliases = {
     "name": "Предметы"

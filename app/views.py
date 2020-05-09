@@ -20,14 +20,14 @@ def check_user_valid(original_function):
 main = Blueprint('main', __name__)
 
 
-@main.before_request
-def before_request():
-    initialize_db()
-
-
-@main.teardown_request
-def after_request(exception):
-    db.close()
+# @main.before_request
+# def before_request():
+#     initialize_db()
+#
+#
+# @main.teardown_request
+# def after_request(exception):
+#     db.close()
 
 
 @main.errorhandler(404)

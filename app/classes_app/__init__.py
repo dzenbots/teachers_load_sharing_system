@@ -3,7 +3,7 @@ from functools import wraps
 from flask import session, url_for
 from werkzeug.utils import redirect
 
-from app.models import Classes, Parallels, StudyLevels
+from app.classes_app.models import Classes, Parallels, StudyLevels
 
 classes_aliases = {
     "name": "Название класса",
