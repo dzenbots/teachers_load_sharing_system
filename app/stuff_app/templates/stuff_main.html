@@ -1,0 +1,93 @@
+{% if 'valid_user' in session %}
+    <main>
+        <iframe name="classes_hidden_iframe" style="display: none;"></iframe>
+        <!-- <div class="base_fluid_container"> -->
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-12 justify-content-center">
+                        <div class="container-fluid">
+                            <div class="classes_main_container">
+                                {% if data %}
+                                    <table class="table table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col">
+                                                    ФИО педагога
+                                                </th>
+                                                {% for subject in data.get('subjects') %}
+                                                    <th scope="col">
+                                                        <p>
+                                                            {{ subject.name }}
+                                                        </p>
+                                                    </th>
+                                                {% endfor %}
+                                            </tr>
+                                        </thead>
+                                        {% for person in data.get('stuff') %}
+                                        <tbody>
+                                            <tr>
+                                                <th scope="row">
+                                                    <span>
+                                                        {{ person.name }}
+                                                    </span>
+                                                </th>
+                                                {% for subject in data.get('subjects') %}
+                                                <td scope="col">
+                                                    <form   id="{{ 'stuff_table_form_{}_{}'.format(person.id, subject.id) }}"
+                                                            action="/stuff_app/checkbox_check/{{ person.id }}/{{ subject.id }}"
+                                                            method="post"
+                                                            class="justify-content-center"
+                                                            target="classes_hidden_iframe"
+                                                    >
+                                                        <input  type="checkbox" 
+                                                                name="{{ 'check_box_{}_{}'.format(person.id, subject.id) }}"
+                                                                class="form-control-ьв"
+
+                                                                {% if subject.id in data.get('links').get(person.id) %}
+                                                                        checked
+                                                                {% endif %}
+                                                                onclick="submit()"
+                                                        />
+                                                    </form>
+                                                </td>
+                                                {% endfor %}
+                                            </tr>
+                                        </tbody>
+                                        {% endfor %}
+                                    </table>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        <!-- </div> -->
+        <!-- HTML-код модального окна -->
+        <div id="stuff_add_new_record" class="modal fade">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <!-- Заголовок модального окна -->
+                    <div class="modal-header">
+                        <h4 class="modal-title">Добавление педагога</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    </div>
+                    <!-- Основное содержимое модального окна -->
+                    <div class="modal-body">
+                        <form id='add_new_person' action="/stuff_app/add_new_person" method="post" class="justify-content-center">
+                            <table>
+                                <tr>
+                                    <input type="text" name="StuffName" class="form-control classes_adding_tr" placeholder="ФИО педагога" required autofocus>
+                                </tr>
+                            </table>
+                        </form>
+                    </div>
+                    <!-- Футер модального окна -->
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Закрыть</button>
+                        <button form="add_new_person" type="submit" class="btn btn-primary">Сохранить</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+{% endif %}
