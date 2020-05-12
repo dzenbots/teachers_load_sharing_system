@@ -1,6 +1,8 @@
+import os
+
 from peewee import SqliteDatabase, Model, CharField, IntegerField, ForeignKeyField, PrimaryKeyField
 
-db = SqliteDatabase(None)
+db = SqliteDatabase(os.environ.get('DB_FILE_PATH'))
 
 
 class BaseModel(Model):

@@ -3,8 +3,6 @@ from functools import wraps
 from flask import Blueprint, session, url_for, render_template
 from werkzeug.utils import redirect
 
-from app.models import initialize_db, db
-
 
 def check_user_valid(original_function):
 
@@ -18,16 +16,6 @@ def check_user_valid(original_function):
 
 
 main = Blueprint('main', __name__)
-
-
-# @main.before_request
-# def before_request():
-#     initialize_db()
-#
-#
-# @main.teardown_request
-# def after_request(exception):
-#     db.close()
 
 
 @main.errorhandler(404)

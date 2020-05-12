@@ -1,8 +1,7 @@
-from flask import Blueprint, render_template, url_for, request, redirect, Response, current_app
+from flask import Blueprint, render_template, url_for, request, redirect, Response
 
 from app.classes_app import classes_table_head, classes_row_table_head, check_user_valid, classes_levels
 from app.classes_app.models import Classes, Parallels, StudyLevels, db, initialize_db
-
 
 classes_app = Blueprint('classes_app',
                         __name__,
@@ -12,23 +11,23 @@ classes_app = Blueprint('classes_app',
 
 
 @classes_app.before_request
+@check_user_valid
 def classes_before_request():
-    db.init(database=current_app.config.get('DB_FILE_PATH'))
     initialize_db()
 
 
-# @classes_app.after_request
-# def classes_after_request():
-#     db.close()
+@classes_app.after_request
+def classes_after_request(resp):
+    db.close()
+    return resp
 
 
 @classes_app.teardown_request
-def classes_teardown_request():
+def classes_teardown_request(exception):
     db.close()
 
 
 @classes_app.route('/')
-@check_user_valid
 def show_classes():
     noo_classes = []
     ooo_classes = []
@@ -61,7 +60,6 @@ def show_classes():
 
 
 @classes_app.route('/add_new_class', methods=['POST'])
-@check_user_valid
 def add_new_class():
     class_name = request.form.get('ClassName')
     if Classes.select().where(Classes.name == class_name).count() == 0:
@@ -72,7 +70,6 @@ def add_new_class():
 
 
 @classes_app.route('/update_class/<record_id>', methods=['POST'])
-@check_user_valid
 def update_db_record(record_id):
     Classes.update(name=request.form.get('id_{}_{}'.format(record_id, classes_row_table_head[1])),
                    parallel=Parallels.select().where(

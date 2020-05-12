@@ -7,8 +7,6 @@ from app.login_app.views import login_app
 from app.subjects_app.views import subjects_app
 from app.views import main
 
-from app.models import db
-
 
 def create_app(config_file='settings.py'):
     app = Flask(__name__)
