@@ -1,10 +1,9 @@
-import os
 from functools import wraps
 
 from flask import session, url_for
 from werkzeug.utils import redirect
 
-from app.subjects_app.models import Subjects, db, initialize_db
+from app.subjects_app.models import Subjects
 
 subject_aliases = {
     "name": "Предметы"
