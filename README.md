@@ -8,7 +8,7 @@
     ```
     
     1.2. Перейти в любую свободную папку на компьютере
-    ``
+    
     1.3. Склонировать репозиторий с помощью команды
     ```
         git clone https://github.com/dzenbots/teachers_load_sharing_system.git
