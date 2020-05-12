@@ -1,6 +1,8 @@
+import os
+
 from peewee import SqliteDatabase, Model, CharField
 
-db = SqliteDatabase(None)
+db = SqliteDatabase(os.environ.get('DB_FILE_PATH'))
 
 
 class BaseModel(Model):
@@ -15,3 +17,7 @@ class Subjects(BaseModel):
 def initialize_db():
     db.connect()
     db.create_tables([Subjects], safe=True)
+
+
+def close_db():
+    db.close()

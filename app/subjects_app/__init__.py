@@ -1,13 +1,10 @@
+import os
 from functools import wraps
 
 from flask import session, url_for
 from werkzeug.utils import redirect
 
 from app.subjects_app.models import Subjects, db, initialize_db
-
-# db.init(database=current_app.config.get('DB_FILE_PATH'))
-# initialize_db()
-# db.close()
 
 subject_aliases = {
     "name": "Предметы"
@@ -20,7 +17,6 @@ for field in subject_row_table_head:
 
 
 def check_user_valid(original_function):
-
     @wraps(original_function)
     def wrapper(*args, **kwargs):
         if 'valid_user' in session:
