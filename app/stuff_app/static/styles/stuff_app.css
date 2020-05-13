@@ -5,7 +5,8 @@
     display: flex;
     align-items: center;
     flex-direction: column;
-    overflow: auto;
+    overflow-x: auto;
+    overflow-y: auto;
 }
 
 .no-border {
@@ -13,3 +14,4 @@
     box-shadow: none; /* You may want to include this as bootstrap applies these styles too */
     background: transparent;
 }
+
