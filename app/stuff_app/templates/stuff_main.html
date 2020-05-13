@@ -29,7 +29,7 @@
                                                 {{ person.name }}
                                             </th>
                                             {% for subject in subjects %}
-                                                <td>
+                                                <td class="justify-content-center" align="center">
                                                     <form   id="{{ 'stuff_table_form_{}_{}'.format(person.id, subject.id) }}"
                                                             action="/stuff_app/checkbox_check/{{ person.id }}/{{ subject.id }}"
                                                             method="post"
