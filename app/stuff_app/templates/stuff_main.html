@@ -1,67 +1,61 @@
 {% if 'valid_user' in session %}
     <main>
-        <iframe name="classes_hidden_iframe" style="display: none;"></iframe>
-        <!-- <div class="base_fluid_container"> -->
+        <iframe name="stuff_hidden_iframe" style="display: none;"></iframe>
+        <div class="base_fluid_container">
             <div class="container-fluid">
                 <div class="row">
-                    <div class="col-12 justify-content-center">
+                    <div class="col justify-content-center">
                         <div class="container-fluid">
-                            <div class="classes_main_container">
-                                {% if data %}
-                                    <table class="table table-bordered">
-                                        <thead>
-                                            <tr>
-                                                <th scope="col">
-                                                    ФИО педагога
+                            <div class="stuff_main_container">
+                                <table class="table table-striped">
+                                    <thead class="thead-dark">
+                                        <tr>
+                                            <th scope="col" class="text-center align-middle">
+                                                ФИО педагога
+                                            </th>
+                                            {% for subject in subjects %}
+                                                <th scope="col" class="text-center align-middle">
+                                                    {{ subject.name }}
                                                 </th>
-                                                {% for subject in data.get('subjects') %}
-                                                    <th scope="col">
-                                                        <p>
-                                                            {{ subject.name }}
-                                                        </p>
-                                                    </th>
-                                                {% endfor %}
-                                            </tr>
-                                        </thead>
-                                        {% for person in data.get('stuff') %}
-                                        <tbody>
-                                            <tr>
-                                                <th scope="row">
-                                                    <span>
-                                                        {{ person.name }}
-                                                    </span>
-                                                </th>
-                                                {% for subject in data.get('subjects') %}
-                                                <td scope="col">
+                                            {% endfor %}
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    {% for person in persons %}
+                                        <tr>
+                                            <th scope="row" class="text-center align-middle">
+                                                {{ person.name }}
+                                            </th>
+                                            {% for subject in subjects %}
+                                                <td>
                                                     <form   id="{{ 'stuff_table_form_{}_{}'.format(person.id, subject.id) }}"
                                                             action="/stuff_app/checkbox_check/{{ person.id }}/{{ subject.id }}"
                                                             method="post"
                                                             class="justify-content-center"
-                                                            target="classes_hidden_iframe"
+                                                            target="stuff_hidden_iframe"
                                                     >
-                                                        <input  type="checkbox" 
+                                                        <input  type="checkbox"
                                                                 name="{{ 'check_box_{}_{}'.format(person.id, subject.id) }}"
-                                                                class="form-control-ьв"
+                                                                class="form-control-md"
 
-                                                                {% if subject.id in data.get('links').get(person.id) %}
+                                                                {% if subject.id in links.get(person.id) %}
                                                                         checked
                                                                 {% endif %}
                                                                 onclick="submit()"
                                                         />
                                                     </form>
                                                 </td>
-                                                {% endfor %}
-                                            </tr>
-                                        </tbody>
-                                        {% endfor %}
-                                    </table>
-                                {% endif %}
+                                            {% endfor %}
+                                        </tr>
+                                    {% endfor %}
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        <!-- </div> -->
+        </div>
         <!-- HTML-код модального окна -->
         <div id="stuff_add_new_record" class="modal fade">
             <div class="modal-dialog">
@@ -73,18 +67,30 @@
                     </div>
                     <!-- Основное содержимое модального окна -->
                     <div class="modal-body">
-                        <form id='add_new_person' action="/stuff_app/add_new_person" method="post" class="justify-content-center">
-                            <table>
-                                <tr>
-                                    <input type="text" name="StuffName" class="form-control classes_adding_tr" placeholder="ФИО педагога" required autofocus>
-                                </tr>
+                        <form id='add_new_stuff'
+                              action="/stuff_app/add_new_person"
+                              method="post"
+                              class="justify-content-center">
+                            <table class="table table-bordered">
+                                <tbody>
+                                    <tr>
+                                        <td scope="col">
+                                            <input type="text"
+                                                   name="StuffName"
+                                                   class="form-control no-border"
+                                                   placeholder="ФИО педагога"
+                                                   required
+                                            >
+                                        </td>
+                                    </tr>
+                                </tbody>
                             </table>
                         </form>
                     </div>
                     <!-- Футер модального окна -->
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Закрыть</button>
-                        <button form="add_new_person" type="submit" class="btn btn-primary">Сохранить</button>
+                        <button form="add_new_stuff" type="submit" class="btn btn-primary">Сохранить</button>
                     </div>
                 </div>
             </div>

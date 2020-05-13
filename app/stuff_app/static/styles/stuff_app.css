@@ -1,0 +1,21 @@
+
+.stuff_main_container {
+    overflow: auto;
+    overflow-y: auto;
+    overflow-x: auto;
+    max-height: calc(100vh - 140px);
+    min-height: calc(100vh - 140px);
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+.stuff_main_container::-webkit-scrollbar::vertical {
+    padding-right: 100px;
+}
+
+
+.no-border {
+    border: 0;
+    box-shadow: none; /* You may want to include this as bootstrap applies these styles too */
+    background: transparent;
+}
