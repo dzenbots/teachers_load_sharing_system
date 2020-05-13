@@ -36,7 +36,6 @@ def show_stuff():
         for item in person.stuff_subject:
             subject = item.subject
             links[person.id].append(subject.id)
-    print(links)
     return render_template("stuff_app.html",
                            subjects=Subjects.select().order_by(Subjects.name),
                            persons=Stuff.select().order_by(Stuff.name),
@@ -54,7 +53,6 @@ def add_stuff():
 def subject_to_person(person_id, subject_id):
     if f'check_box_{person_id}_{subject_id}' in request.form:
         StuffSubject.get_or_create(stuff=person_id, subject=subject_id)
-        print('created')
     elif not (f"check_box_{person_id}_{subject_id}" in request.form):
         StuffSubject.delete().where(StuffSubject.stuff == person_id).where(StuffSubject.subject == subject_id).execute()
     return Response(status=200)
