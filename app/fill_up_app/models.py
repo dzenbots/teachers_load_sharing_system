@@ -16,15 +16,15 @@ class StudyLevels(BaseModel):
 
 class Parallels(BaseModel):
     name = IntegerField(unique=True)
-    level = ForeignKeyField(StudyLevels.name, backref="level_parallels")
+    level = ForeignKeyField(StudyLevels, backref="level_parallels")
     max_hours = IntegerField()
 
 
 class Classes(BaseModel):
     id = PrimaryKeyField()
     name = CharField(max_length=255, unique=True)
-    parallel = ForeignKeyField(Parallels.name, backref="parallel_classes")
-    # max_hours = IntegerField()
+    parallel = ForeignKeyField(Parallels, backref="parallel_classes")
+    hours_num = IntegerField()
     students_num = IntegerField()
 
 
@@ -34,8 +34,8 @@ class Subjects(BaseModel):
 
 class ClassesSubjects(BaseModel):
     id = PrimaryKeyField()
-    class_id = ForeignKeyField(Classes.id, backref="class_subjects")
-    subject_name = ForeignKeyField(Subjects.name, backref="subject_classes")
+    class_id = ForeignKeyField(Classes, backref="class_subjects")
+    subject_name = ForeignKeyField(Subjects, backref="subject_classes")
     groups_num = IntegerField()
     hours_num = IntegerField()
 

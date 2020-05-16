@@ -1,7 +1,7 @@
 from flask import Blueprint, render_template
 
 from app.fill_up_app import check_user_valid
-from app.fill_up_app.models import initialize_db, db
+from app.fill_up_app.models import initialize_db, db, Subjects, Parallels, ClassesSubjects
 
 fill_up_app = Blueprint('fill_up_app',
                         __name__,
@@ -30,5 +30,10 @@ def classes_teardown_request(exception):
 @check_user_valid
 @fill_up_app.route('/<parallel>')
 def show_parallel(parallel):
+    data = dict()
+    data['subjects'] = Subjects.select().order_by(Subjects.name)
+    data['classes'] = Parallels.get(name=parallel).parallel_classes
+    data['links'] = ClassesSubjects.select()
     return render_template("fill_up_app.html",
-                           parallel=parallel)
+                           parallel=parallel,
+                           data=data)

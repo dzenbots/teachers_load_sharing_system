@@ -32,6 +32,7 @@ def show_classes():
     noo_classes = []
     ooo_classes = []
     coo_classes = []
+
     for parallel in StudyLevels.get(StudyLevels.name == classes_levels.get('HOO')).level_parallels:
         for noo_class in parallel.classes_parallel:
             noo_classes.append(noo_class)
@@ -57,6 +58,7 @@ def show_classes():
 def add_new_class():
     Classes.get_or_create(name=request.form.get('ClassName'),
                           parallel=Parallels.get(name=request.form.get('Parallel')),
+                          hours_num=0,
                           students_num=request.form.get('students_num'))
     return redirect(url_for('classes_app.show_classes'))
 
