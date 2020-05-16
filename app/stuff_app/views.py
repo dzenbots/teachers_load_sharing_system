@@ -51,6 +51,10 @@ def add_stuff():
 
 @stuff_app.route("/update_record/<stuff_id>", methods=['POST'])
 def edit_stuff(stuff_id):
+    if request.form.get(f'id_{stuff_id}') == "":
+        return Response(status=200)
+    elif Stuff.select().where(Stuff.name == request.form.get(f'id_{stuff_id}')).count() != 0:
+        return Response(status=200)
     Stuff.update(name=request.form.get(f'id_{stuff_id}')).where(Stuff.id == stuff_id).execute()
     return Response(status=200)
 

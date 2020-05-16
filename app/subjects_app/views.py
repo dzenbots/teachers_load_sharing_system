@@ -42,6 +42,6 @@ def add_new_subject():
 @subjects_app.route('/update_record/<record_id>', methods=['POST'])
 def update_db_record(record_id):
     if not (request.form.get(f'id_{record_id}') == ""):
-        if Subjects.get(name=request.form.get(f'id_{record_id}')) is None:
+        if Subjects.select().where(Subjects.name == request.form.get(f'id_{record_id}')).count() == 0:
             Subjects.update(name=request.form.get(f'id_{record_id}')).where(Subjects.id == record_id).execute()
     return Response(status=200)
