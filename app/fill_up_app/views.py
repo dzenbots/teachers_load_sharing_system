@@ -27,6 +27,7 @@ def classes_teardown_request(exception):
     db.close()
 
 
+@check_user_valid
 @fill_up_app.route('/<parallel>')
 def show_parallel(parallel):
     return render_template("fill_up_app.html",
