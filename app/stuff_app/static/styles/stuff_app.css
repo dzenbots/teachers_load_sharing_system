@@ -15,3 +15,6 @@
     background: transparent;
 }
 
+.th_width_350 {
+    min-width: 350px;
+}

@@ -49,6 +49,12 @@ def add_stuff():
     return redirect(url_for('stuff_app.show_stuff'))
 
 
+@stuff_app.route("/update_record/<stuff_id>", methods=['POST'])
+def edit_stuff(stuff_id):
+    Stuff.update(name=request.form.get(f'id_{stuff_id}')).where(Stuff.id == stuff_id).execute()
+    return Response(status=200)
+
+
 @stuff_app.route('/checkbox_check/<person_id>/<subject_id>', methods=['POST'])
 def subject_to_person(person_id, subject_id):
     if f'check_box_{person_id}_{subject_id}' in request.form:

@@ -25,9 +25,24 @@
                                     <tbody>
                                     {% for person in persons %}
                                         <tr>
-                                            <th scope="row" class="text-center align-middle">
-                                                {{ person.name }}
-                                            </th>
+                                            <form   id='stuff_form'
+                                                                action="/stuff_app/update_record/{{ person.id }}"
+                                                                method="post"
+                                                                class="justify-content-center"
+                                                                target="stuff_hidden_iframe"
+                                                                >
+                                                <th scope="row" class="text-center align-middle th_width_350">
+
+                                                    <input  type="text"
+                                                                            name="{{ 'id_{}'.format(person.id) }}"
+                                                                            class="form-control no-border"
+                                                                            value="{{ person.name }}"
+                                                                            onchange="submit()"
+                                                                            required
+
+                                                                    >
+                                                </th>
+                                            </form>
                                             {% for subject in subjects %}
                                                 <td class="justify-content-center" align="center">
                                                     <form   id="{{ 'stuff_table_form_{}_{}'.format(person.id, subject.id) }}"
