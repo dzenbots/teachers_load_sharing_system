@@ -23,7 +23,7 @@
                                         <tbody>
                                             {% for subject in subjects %}
                                                 <tr>
-                                                    <form   id='subjects_form'
+                                                    <form   id="{{ 'subject_form_{}'.format(subject.id) }}"
                                                                 action="/subjects_app/update_record/{{ subject.id }}"
                                                                 method="post"
                                                                 class="justify-content-center"
@@ -37,7 +37,6 @@
                                                                             value="{{ subject.name }}"
                                                                             onchange="submit()"
                                                                             required
-
                                                                     >
                                                         </td>
                                                     </form>

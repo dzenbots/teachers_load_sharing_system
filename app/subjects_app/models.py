@@ -11,7 +11,7 @@ class BaseModel(Model):
 
 
 class Subjects(BaseModel):
-    name = CharField()
+    name = CharField(unique=True)
 
 
 def initialize_db():

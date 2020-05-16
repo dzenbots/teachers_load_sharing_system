@@ -1,4 +1,4 @@
-from flask import Blueprint
+from flask import Blueprint, render_template
 
 from app.fill_up_app import check_user_valid
 from app.fill_up_app.models import initialize_db, db
@@ -26,3 +26,8 @@ def classes_after_request(resp):
 def classes_teardown_request(exception):
     db.close()
 
+
+@fill_up_app.route('/<parallel>')
+def show_parallel(parallel):
+    return render_template("fill_up_app.html",
+                           parallel=parallel)
