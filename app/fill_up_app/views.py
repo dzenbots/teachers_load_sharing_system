@@ -33,9 +33,14 @@ def show_parallel(parallel):
     data = dict()
     data['subjects'] = Subjects.select().order_by(Subjects.name)
     data['classes'] = Parallels.get(name=parallel).parallel_classes
-    data['links'] = ClassesSubjects.select().where(ClassesSubjects.class_id == data['classes'])
-    for row in data['links']:
-        print(row)
+    data['links'] = {}
+    ClassesSubjects.select().where(ClassesSubjects.class_id == data['classes'])
+    for klass in data['classes']:
+        for row in ClassesSubjects.select().where(ClassesSubjects.class_id == klass):
+            data['links'][f"{row.class_id}_{row.subject_name}"] = {
+                "hours_num": row.hours_num,
+                "groups_num": row.groups_num
+            }
     return render_template("fill_up_app.html",
                            parallel=parallel,
                            data=data)
@@ -52,8 +57,8 @@ def save_changes(parallel):
             if request.form.get('hours_{}_{}'.format(subject.id, klass.id)) != "":
                 groups_num = request.form.get('groups_{}_{}'.format(subject.id, klass.id))
                 hours_num = request.form.get('hours_{}_{}'.format(subject.id, klass.id))
-                ClassesSubjects.create(class_id=klass,
-                                       subject_name=subject,
-                                       groups_num=groups_num,
-                                       hours_num=hours_num)
+                ClassesSubjects.get_or_create(class_id=klass,
+                                              subject_name=subject,
+                                              groups_num=groups_num,
+                                              hours_num=hours_num)
     return Response(status=200)

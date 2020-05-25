@@ -86,14 +86,22 @@
                                             <input type="text"
                                                    name="{{ 'hours_{}_{}'.format(subject.id, klass.id) }}"
                                                    class="form-control no-border"
-                                                   value=""
+                                                   {% if '{}_{}'.format(klass.id, subject.id) in data.get('links') %}
+                                                        value="{{ data.get('links').get('{}_{}'.format(klass.id, subject.id)).get('hours_num') }}"
+                                                   {% else %}
+                                                        value=""
+                                                   {% endif %}
                                             >
                                         </td>
                                         <td scope="col">
                                             <input type="text"
                                                    name="{{ 'groups_{}_{}'.format(subject.id, klass.id) }}"
                                                    class="form-control no-border"
-                                                   value="1"
+                                                   {% if '{}_{}'.format(klass.id, subject.id) in data.get('links') %}
+                                                        value="{{ data.get('links').get('{}_{}'.format(klass.id, subject.id)).get('groups_num') }}"
+                                                   {% else %}
+                                                        value=""
+                                                   {% endif %}
                                             >
                                         </td>
                                         {% endfor %}
