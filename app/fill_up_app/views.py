@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template
+from flask import Blueprint, render_template, Response, request
 
 from app.fill_up_app import check_user_valid
 from app.fill_up_app.models import initialize_db, db, Subjects, Parallels, ClassesSubjects
@@ -33,7 +33,27 @@ def show_parallel(parallel):
     data = dict()
     data['subjects'] = Subjects.select().order_by(Subjects.name)
     data['classes'] = Parallels.get(name=parallel).parallel_classes
-    data['links'] = ClassesSubjects.select()
+    data['links'] = ClassesSubjects.select().where(ClassesSubjects.class_id == data['classes'])
+    for row in data['links']:
+        print(row)
     return render_template("fill_up_app.html",
                            parallel=parallel,
                            data=data)
+
+
+@check_user_valid
+@fill_up_app.route('/save_changes/<parallel>', methods=['POST'])
+def save_changes(parallel):
+    data = dict()
+    data['subjects'] = Subjects.select().order_by(Subjects.name)
+    data['classes'] = Parallels.get(name=parallel).parallel_classes
+    for subject in data['subjects']:
+        for klass in data['classes']:
+            if request.form.get('hours_{}_{}'.format(subject.id, klass.id)) != "":
+                groups_num = request.form.get('groups_{}_{}'.format(subject.id, klass.id))
+                hours_num = request.form.get('hours_{}_{}'.format(subject.id, klass.id))
+                ClassesSubjects.create(class_id=klass,
+                                       subject_name=subject,
+                                       groups_num=groups_num,
+                                       hours_num=hours_num)
+    return Response(status=200)

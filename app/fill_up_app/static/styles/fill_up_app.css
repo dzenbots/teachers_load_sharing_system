@@ -14,7 +14,7 @@
     background: transparent;
 }
 
-.th_width_350 {
-    min-width: 350px;
-    max-width: 350px;
+.th_width {
+    min-width: 25%;
+    max-width: 25%;
 }

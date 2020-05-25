@@ -1,90 +1,113 @@
 {% if 'valid_user' in session %}
-    <main>
-        <iframe name="classes_hidden_iframe" style="display: none;"></iframe>
-        <div class="base_fluid_container">
-            <div class="container-fluid">
-                <div class="row">
-                    <div class="col justify-content-center">
-                        <div class="container-fluid">
-                            <div class="fill_up_main_container">
+<main>
+    <iframe name="fill_up__hidden_iframe" style="display: none;"></iframe>
+    <div class="base_fluid_container">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col justify-content-center">
+                    <div class="container-fluid">
+                        <div class="fill_up_main_container">
                             {% if data %}
-                                <table class="table table-bordered table-striped">
-                                    <thead>
-                                    <tr>
-                                        <th scope="col" class="text-center align-middle ">
-                                            Класс
-                                        </th>
-                                        {% for class in data.get('classes') %}
-                                            <th scope="col" class="text-center align-middle" colspan="2">
-                                                {{ class.name }}
-                                            </th>
-                                        {% endfor %}
-                                    </tr>
-                                    <tr>
-                                        <th scope="col" class="text-center align-middle ">
-                                            Количество обучающихся
-                                        </th>
-                                        {% for class in data.get('classes') %}
-                                            <th scope="col" class="text-center align-middle" colspan="2">
-                                                {{ class.students_num }}
-                                            </th>
-                                        {% endfor %}
-                                    </tr>
-                                    <tr>
-                                        <th  scope="col" class="text-center align-middle" rowspan="2"></th>
-                                        {% for class in data.get('classes') %}
-                                            <th scope="col" class="text-center align-middle">
+                            <table class="table table-bordered table-striped">
+                                <thead>
+                                <tr>
+                                    <th scope="col" class="text-center align-middle th-width">
+                                        Класс
+                                    </th>
+                                    {% for class in data.get('classes') %}
+                                    <th scope="col" class="text-center align-middle" colspan="2">
+                                        {{ class.name }}
+                                    </th>
+                                    {% endfor %}
+                                </tr>
+                                <tr>
+                                    <th scope="col" class="text-center align-middle ">
+                                        Количество обучающихся
+                                    </th>
+                                    {% for class in data.get('classes') %}
+                                    <th scope="col" class="text-center align-middle" colspan="2">
+                                        {{ class.students_num }}
+                                    </th>
+                                    {% endfor %}
+                                </tr>
+                                <tr>
+                                    <th scope="col" class="text-center align-middle" rowspan="2"></th>
+                                    {% for class in data.get('classes') %}
+                                    <th scope="col" class="text-center align-middle">
                                                 <span style="display: inline-block; white-space: nowrap; transform-origin: center; transform: rotate(180deg); writing-mode: vertical-lr">
                                                     Всего часов
                                                 </span>
-                                            </th>
-                                            <th scope="col" class="text-center align-middle">
+                                    </th>
+                                    <th scope="col" class="text-center align-middle">
                                                 <span style="display: inline-block; white-space: nowrap; transform-origin: center; transform: rotate(180deg); writing-mode: vertical-lr">
                                                     Макс. часов
                                                 </span>
-                                            </th>
-                                        {% endfor %}
-                                    </tr>
+                                    </th>
+                                    {% endfor %}
+                                </tr>
+                                <tr>
+                                    {% for class in data.get('classes') %}
+                                    <th scope="col" class="text-center align-middle">
+                                        {{ class.hours_num }}
+                                    </th>
+                                    <th scope="col" class="text-center align-middle">
+                                        {{ class.parallel.max_hours }}
+                                    </th>
+                                    {% endfor %}
+                                </tr>
+                                <tr>
+                                    <th scope="col" class="text-center align-middle">
+                                        Предметы
+                                    </th>
+                                    {% for class in data.get('classes') %}
+                                    <th scope="col" class="text-center align-middle">
+                                        Часы
+                                    </th>
+                                    <th scope="col" class="text-center align-middle">
+                                        Подгруппы
+                                    </th>
+                                    {% endfor %}
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <form id="fill_up_form"
+                                      action="{{ '/fill_up_app/save_changes/{}'.format(parallel) }}"
+                                      method="post"
+                                      class="justify-content-center"
+                                      target="fill_up__hidden_iframe"
+                                >
+                                    {% for subject in data.get('subjects') %}
                                     <tr>
-                                        {% for class in data.get('classes') %}
-                                            <th scope="col" class="text-center align-middle">
-                                                {{ class.hours_num }}
-                                            </th>
-                                            <th scope="col" class="text-center align-middle">
-                                                {{ class.parallel.max_hours }}
-                                            </th>
+                                        <th scope="row">
+                                            {{ subject.name }}
+                                        </th>
+                                        {% for klass in data.get('classes') %}
+                                        <td scope="col">
+                                            <input type="text"
+                                                   name="{{ 'hours_{}_{}'.format(subject.id, klass.id) }}"
+                                                   class="form-control no-border"
+                                                   value=""
+                                            >
+                                        </td>
+                                        <td scope="col">
+                                            <input type="text"
+                                                   name="{{ 'groups_{}_{}'.format(subject.id, klass.id) }}"
+                                                   class="form-control no-border"
+                                                   value="1"
+                                            >
+                                        </td>
                                         {% endfor %}
                                     </tr>
-                                    <tr>
-                                        <th scope="col" class="text-center align-middle">
-                                            Предметы
-                                        </th>
-                                        {% for class in data.get('classes') %}
-                                        <th scope="col" class="text-center align-middle">
-                                            Часы
-                                        </th>
-                                        <th scope="col" class="text-center align-middle">
-                                            Подгруппы
-                                        </th>
-                                        {% endfor %}
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                        {% for subject in data.get('subjects') %}
-                                            <tr>
-                                                <td scope="row">
-                                                    {{ subject.name }}
-                                                </td>
-                                            </tr>
-                                        {% endfor %}
-                                    </tbody>
-                                </table>
+                                    {% endfor %}
+                                </form>
+                                </tbody>
+                            </table>
                             {% endif %}
-                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </main>
+    </div>
+</main>
 {% endif %}

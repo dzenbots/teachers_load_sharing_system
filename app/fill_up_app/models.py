@@ -24,7 +24,7 @@ class Classes(BaseModel):
     id = PrimaryKeyField()
     name = CharField(max_length=255, unique=True)
     parallel = ForeignKeyField(Parallels, backref="parallel_classes")
-    hours_num = IntegerField()
+    # hours_num = IntegerField()
     students_num = IntegerField()
 
 
