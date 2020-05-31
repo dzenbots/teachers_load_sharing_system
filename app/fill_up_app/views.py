@@ -57,8 +57,16 @@ def save_changes(parallel):
             if request.form.get('hours_{}_{}'.format(subject.id, klass.id)) != "":
                 groups_num = request.form.get('groups_{}_{}'.format(subject.id, klass.id))
                 hours_num = request.form.get('hours_{}_{}'.format(subject.id, klass.id))
-                ClassesSubjects.get_or_create(class_id=klass,
-                                              subject_name=subject,
-                                              groups_num=groups_num,
-                                              hours_num=hours_num)
+                selection = ClassesSubjects.select() \
+                    .where(ClassesSubjects.class_id == klass) \
+                    .where(ClassesSubjects.subject_name == subject)
+                if selection.count() == 0:
+                    ClassesSubjects.create(class_id=klass,
+                                           subject_name=subject,
+                                           groups_num=groups_num,
+                                           hours_num=hours_num)
+                elif selection.count() == 1:
+                    ClassesSubjects.update(groups_num=groups_num, hours_num=hours_num) \
+                        .where(ClassesSubjects.class_id == klass) \
+                        .where(ClassesSubjects.subject_name == subject).execute()
     return Response(status=200)
