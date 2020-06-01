@@ -16,7 +16,9 @@ class Subjects(BaseModel):
 
 def initialize_db():
     db.connect()
-    db.create_tables([Subjects], safe=True)
+    db.create_tables([
+        Subjects
+    ], safe=True)
 
 
 def close_db():
