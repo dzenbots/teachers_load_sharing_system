@@ -37,6 +37,12 @@ class ClassesSubjects(BaseModel):
     hours_num = IntegerField()
 
 
+class Metagroups(BaseModel):
+    class_id = ForeignKeyField(Classes, backref="class_metagroups")
+    subject_name = ForeignKeyField(Subjects, backref="subject_metagroups")
+    meta_name = CharField(max_length=255)
+
+
 def initialize_db():
     db.connect()
     db.create_tables(
@@ -45,6 +51,7 @@ def initialize_db():
             Parallels,
             Classes,
             Subjects,
-            ClassesSubjects
+            ClassesSubjects,
+            Metagroups
         ], safe=True)
 

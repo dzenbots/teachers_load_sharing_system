@@ -1,7 +1,7 @@
 from flask import Blueprint, render_template, Response, request
 
 from app.fill_up_app import check_user_valid
-from app.fill_up_app.models import initialize_db, db, Subjects, Parallels, ClassesSubjects
+from app.fill_up_app.models import initialize_db, db, Subjects, Parallels, ClassesSubjects, Metagroups
 
 fill_up_app = Blueprint('fill_up_app',
                         __name__,
@@ -41,7 +41,7 @@ def show_parallel(parallel):
                 "hours_num": row.hours_num,
                 "groups_num": row.groups_num
             }
-    return render_template("metagroupes_app.html",
+    return render_template("fill_up_app.html",
                            parallel=parallel,
                            data=data)
 
@@ -65,8 +65,22 @@ def save_changes(parallel):
                                            subject_name=subject,
                                            groups_num=groups_num,
                                            hours_num=hours_num)
+                    for i in range(0, int(groups_num)):
+                        Metagroups.create(class_id=klass,
+                                          subject_name=subject,
+                                          meta_name=''
+                                          )
                 elif selection.count() == 1:
                     ClassesSubjects.update(groups_num=groups_num, hours_num=hours_num) \
                         .where(ClassesSubjects.class_id == klass) \
                         .where(ClassesSubjects.subject_name == subject).execute()
+                    Metagroups.delete() \
+                        .where(Metagroups.class_id == klass) \
+                        .where(Metagroups.subject_name == subject) \
+                        .execute()
+                    for i in range(0, int(groups_num)):
+                        Metagroups.create(class_id=klass,
+                                          subject_name=subject,
+                                          meta_name=''
+                                          )
     return Response(status=200)
