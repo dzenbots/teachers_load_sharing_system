@@ -1,0 +1,20 @@
+.metagropes_main_container {
+    max-height: calc(100vh - 140px);
+    min-height: calc(100vh - 140px);
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    overflow-x: auto;
+    overflow-y: auto;
+}
+
+.no-border {
+    border: 0;
+    box-shadow: none; /* You may want to include this as bootstrap applies these styles too */
+    background: transparent;
+}
+
+.th_width {
+    min-width: 25%;
+    max-width: 25%;
+}

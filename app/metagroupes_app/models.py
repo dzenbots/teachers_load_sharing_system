@@ -1,6 +1,6 @@
 import os
 
-from peewee import SqliteDatabase, Model, CharField, PrimaryKeyField, ForeignKeyField, IntegerField
+from peewee import SqliteDatabase, Model, CharField, ForeignKeyField, IntegerField
 
 db = SqliteDatabase(os.environ.get('DB_FILE_PATH'))
 
@@ -54,4 +54,3 @@ def initialize_db():
             ClassesSubjects,
             Metagroups
         ], safe=True)
-

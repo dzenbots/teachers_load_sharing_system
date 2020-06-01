@@ -1,0 +1,48 @@
+{% if 'valid_user' in session %}
+<main>
+    <iframe name="metagroupes_hidden_iframe" style="display: none;"></iframe>
+    <div class="base_fluid_container">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col justify-content-center">
+                    <div class="container-fluid">
+                        <div class="metagroupes_main_container">
+                            {% if data %}
+                            <table class="table table-bordered table-striped">
+                                <thead>
+                                <tr>
+                                    <th scope="col" class="text-center align-midle th-width">
+                                        Класс
+                                    </th>
+                                    <th scope="col" class="text-center align-midle th-width">
+                                        Предмет
+                                    </th>
+                                    <th scope="col" class="text-center align-midle th-width">
+                                        Метагруппа
+                                    </th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <form id="metagroupes_form"
+                                      action="{{ '/metagroupes_app/save_changes/{}'.format(parallel) }}"
+                                      method="post"
+                                      class="justify-content-center"
+                                      target="fill_up__hidden_iframe"
+                                >
+                                    {% for class in data.get('classes') %}
+                                        {% for subject in data.get('subjects') %}
+
+                                        {% endfor %}
+                                    {% endfor %}
+                                </form>
+                                </tbody>
+                            </table>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+{% endif %}

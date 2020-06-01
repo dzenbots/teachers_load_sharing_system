@@ -41,7 +41,7 @@ def show_parallel(parallel):
                 "hours_num": row.hours_num,
                 "groups_num": row.groups_num
             }
-    return render_template("fill_up_app.html",
+    return render_template("metagroupes_app.html",
                            parallel=parallel,
                            data=data)
 
