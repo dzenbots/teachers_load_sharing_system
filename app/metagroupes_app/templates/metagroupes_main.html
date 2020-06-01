@@ -29,9 +29,25 @@
                                       class="justify-content-center"
                                       target="fill_up__hidden_iframe"
                                 >
-                                    {% for class in data.get('classes') %}
-                                        {% for subject in data.get('subjects') %}
-
+                                    {% for klass in data.keys() %}
+                                        {% for meta_id, meta_group in data.get(klass).items() %}
+                                            <tr>
+                                                <td>
+                                                    <span>
+                                                        {{ klass }}
+                                                    </span>
+                                                </td>
+                                                <td>
+                                                    <span>
+                                                        {{ meta_group.get('subject') }}
+                                                    </span>
+                                                </td>
+                                                <td>
+                                                    <span>
+                                                        {{ meta_group.get('meta_name') }}
+                                                    </span>
+                                                </td>
+                                            </tr>
                                         {% endfor %}
                                     {% endfor %}
                                 </form>

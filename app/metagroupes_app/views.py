@@ -1,7 +1,7 @@
 from flask import Blueprint, render_template
 
 from app.metagroupes_app import check_user_valid
-from app.metagroupes_app.models import initialize_db, db, Subjects, Parallels, ClassesSubjects
+from app.metagroupes_app.models import initialize_db, db, Subjects, Parallels
 
 metagroupes_app = Blueprint('metagroupes_app',
                             __name__,
@@ -31,11 +31,11 @@ def classes_teardown_request(exception):
 @metagroupes_app.route('/<parallel>')
 def show_parallel(parallel):
     data = dict()
-    data['subjects'] = Subjects.select().order_by(Subjects.name)
-    data['classes'] = Parallels.get(name=parallel).parallel_classes
-    data['meta'] = []
-    for klass in data.get('classes'):
-        data['meta'].append(klass.class_metagroups)
+    for klass in Parallels.get(name=parallel).parallel_classes:
+        data[klass.name] = dict()
+        for metagroup in klass.class_metagroups:
+            data[klass.name][f"{metagroup.id}"] = {'subject': Subjects.get(id=metagroup.subject_name).name,
+                                                   'meta_name': metagroup.meta_name}
     return render_template("metagroupes_app.html",
                            parallel=parallel,
                            data=data)
