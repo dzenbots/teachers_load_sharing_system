@@ -1,7 +1,7 @@
-from flask import Blueprint, render_template
+from flask import Blueprint, render_template, request, Response
 
 from app.metagroupes_app import check_user_valid
-from app.metagroupes_app.models import initialize_db, db, Subjects, Parallels
+from app.metagroupes_app.models import initialize_db, db, Subjects, Parallels, Metagroups
 
 metagroupes_app = Blueprint('metagroupes_app',
                             __name__,
@@ -39,3 +39,15 @@ def show_parallel(parallel):
     return render_template("metagroupes_app.html",
                            parallel=parallel,
                            data=data)
+
+
+@check_user_valid
+@metagroupes_app.route('/save_changes/<parallel>', methods=['POST'])
+def save_changes(parallel):
+    for klass in Parallels.get(name=parallel).parallel_classes:
+        for metagroup in klass.class_metagroups:
+            meta_name = request.form.get(f'meta_{metagroup.id}')
+            Metagroups.update({Metagroups.meta_name: meta_name}) \
+                .where(Metagroups.id == metagroup.id) \
+                .execute()
+    return Response(status=200)
