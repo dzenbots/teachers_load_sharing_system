@@ -30,7 +30,6 @@ class Subjects(BaseModel):
     name = CharField(unique=True)
 
 
-
 class Stuff(BaseModel):
     name = CharField(unique=True)
     # position = CharField()
@@ -64,5 +63,6 @@ def initialize_db():
             Classes,
             Subjects,
             ClassesSubjects,
-            Metagroups
+            Metagroups,
+            Nagruzka
         ], safe=True)

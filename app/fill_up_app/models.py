@@ -49,7 +49,6 @@ def initialize_db():
         [
             StudyLevels,
             Parallels,
-            Stuff,
             Classes,
             Subjects,
             ClassesSubjects,

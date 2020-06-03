@@ -62,5 +62,6 @@ def save_changes(parallel):
         else:
             meta_data[Subjects.get(id=metagroup.subject_name).name][metagroup.meta_name]['classes'] += \
                 f"_{Classes.get(id=metagroup.class_id).name}"
-    print(meta_data)
+    for subject, metagroup in meta_data.items():
+        print(subject, metagroup)
     return Response(status=200)

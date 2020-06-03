@@ -70,17 +70,26 @@ def save_changes(parallel):
                                           subject_name=subject,
                                           meta_name=''
                                           )
-                elif selection.count() == 1:
-                    ClassesSubjects.update(groups_num=groups_num, hours_num=hours_num) \
-                        .where(ClassesSubjects.class_id == klass) \
-                        .where(ClassesSubjects.subject_name == subject).execute()
-                    Metagroups.delete() \
-                        .where(Metagroups.class_id == klass) \
-                        .where(Metagroups.subject_name == subject) \
-                        .execute()
-                    for i in range(0, int(groups_num)):
-                        Metagroups.create(class_id=klass,
-                                          subject_name=subject,
-                                          meta_name=''
-                                          )
+                else:
+                    if ClassesSubjects.select() \
+                            .where(ClassesSubjects.class_id == klass) \
+                            .where(ClassesSubjects.subject_name == subject) \
+                            .where(ClassesSubjects.groups_num == groups_num) \
+                            .count() == 1:
+                        ClassesSubjects.update(hours_num=hours_num) \
+                            .where(ClassesSubjects.class_id == klass) \
+                            .where(ClassesSubjects.subject_name == subject).execute()
+                    else:
+                        ClassesSubjects.update(groups_num=groups_num, hours_num=hours_num) \
+                            .where(ClassesSubjects.class_id == klass) \
+                            .where(ClassesSubjects.subject_name == subject).execute()
+                        Metagroups.delete() \
+                            .where(Metagroups.class_id == klass) \
+                            .where(Metagroups.subject_name == subject) \
+                            .execute()
+                        for i in range(0, int(groups_num)):
+                            Metagroups.create(class_id=klass,
+                                              subject_name=subject,
+                                              meta_name=''
+                                              )
     return Response(status=200)
