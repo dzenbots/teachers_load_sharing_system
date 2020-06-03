@@ -1,7 +1,7 @@
 from flask import Blueprint, render_template, request, Response
 
 from app.metagroupes_app import check_user_valid
-from app.metagroupes_app.models import initialize_db, db, Subjects, Parallels, Metagroups
+from app.metagroupes_app.models import initialize_db, db, Subjects, Parallels, Metagroups, Classes
 
 metagroupes_app = Blueprint('metagroupes_app',
                             __name__,
@@ -50,4 +50,17 @@ def save_changes(parallel):
             Metagroups.update({Metagroups.meta_name: meta_name}) \
                 .where(Metagroups.id == metagroup.id) \
                 .execute()
+
+    meta_data = dict()
+    for metagroup in Metagroups.select():
+        if not (Subjects.get(id=metagroup.subject_name).name in meta_data):
+            meta_data[Subjects.get(id=metagroup.subject_name).name] = dict()
+        if not (metagroup.meta_name in meta_data[Subjects.get(id=metagroup.subject_name).name]):
+            meta_data[Subjects.get(id=metagroup.subject_name).name][metagroup.meta_name] = dict()
+            meta_data[Subjects.get(id=metagroup.subject_name).name][metagroup.meta_name]['classes'] = Classes.get(
+                id=metagroup.class_id).name
+        else:
+            meta_data[Subjects.get(id=metagroup.subject_name).name][metagroup.meta_name]['classes'] += \
+                f"_{Classes.get(id=metagroup.class_id).name}"
+    print(meta_data)
     return Response(status=200)

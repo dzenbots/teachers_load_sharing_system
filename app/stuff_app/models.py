@@ -15,13 +15,11 @@ class Subjects(BaseModel):
 
 
 class Stuff(BaseModel):
-    id = PrimaryKeyField()
     name = CharField(unique=True)
     # position = CharField()
 
 
 class StuffSubject(BaseModel):
-    id = PrimaryKeyField()
     stuff = ForeignKeyField(Stuff, backref='stuff_subject')
     subject = ForeignKeyField(Subjects, backref="subject_stuff")
 
