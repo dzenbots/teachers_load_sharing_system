@@ -30,6 +30,12 @@ class Subjects(BaseModel):
     name = CharField(unique=True)
 
 
+class Stuff(BaseModel):
+    id = PrimaryKeyField()
+    name = CharField()
+    # position = CharField()
+
+
 class ClassesSubjects(BaseModel):
     class_id = ForeignKeyField(Classes, backref="class_subjects")
     subject_name = ForeignKeyField(Subjects, backref="subject_classes")
@@ -43,15 +49,23 @@ class Metagroups(BaseModel):
     meta_name = CharField(max_length=255)
 
 
+class Nagruzka(BaseModel):
+    id = PrimaryKeyField()
+    subject_name = ForeignKeyField(Subjects, backref="subject_metagrops")
+    stuff_id = ForeignKeyField(Stuff, backref="stuff_nagruzka", null=False)
+    meta_name = ForeignKeyField(Metagroups, backref="meta_nagruzka")
+
+
 def initialize_db():
     db.connect()
     db.create_tables(
         [
             StudyLevels,
             Parallels,
+            Stuff,
             Classes,
             Subjects,
             ClassesSubjects,
-            Metagroups
+            Metagroups,
+            Nagruzka
         ], safe=True)
-

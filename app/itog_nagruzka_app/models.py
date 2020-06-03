@@ -22,7 +22,7 @@ class Parallels(BaseModel):
 class Classes(BaseModel):
     id = PrimaryKeyField()
     name = CharField(max_length=255)
-    parallel = ForeignKeyField(Parallels.name, backref="parallel_classes")
+    parallel = ForeignKeyField(Parallels, backref="parallel_classes")
     students_num = IntegerField()
 
 
@@ -46,5 +46,18 @@ class Metagroups(BaseModel):
 class Nagruzka(BaseModel):
     id = PrimaryKeyField()
     subject_name = ForeignKeyField(Subjects, backref="subject_metagrops")
-    stuff_id = ForeignKeyField(Stuff, backref="stuff_nagruzka")
+    stuff_id = ForeignKeyField(Stuff, backref="stuff_nagruzka", null=False)
     meta_name = ForeignKeyField(Metagroups, backref="meta_nagruzka")
+
+
+def initialize_db():
+    db.connect()
+    db.create_tables(
+        [
+            StudyLevels,
+            Parallels,
+            Classes,
+            Subjects,
+            Metagroups,
+            Nagruzka
+        ], safe=True)
