@@ -1,0 +1,22 @@
+{% if 'valid_user' in session %}
+<main>
+    <iframe name="itog_nagruzka_hidden_iframe" style="display: none;"></iframe>
+    <div class="base_fluid_container">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col justify-content-center">
+                    <div class="container-fluid">
+                        <div class="itog_nagruzka_main_container">
+                            {% if data %}
+                            <table class="table table-bordered table-striped">
+
+                            </table>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+{% endif %}
