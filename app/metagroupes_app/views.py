@@ -1,7 +1,7 @@
 from flask import Blueprint, render_template, request, Response
 
 from app.metagroupes_app import check_user_valid
-from app.metagroupes_app.models import initialize_db, db, Subjects, Parallels, Metagroups, Classes
+from app.metagroupes_app.models import initialize_db, db, Subjects, Parallels, Metagroups, Classes, Nagruzka
 
 metagroupes_app = Blueprint('metagroupes_app',
                             __name__,
@@ -55,6 +55,7 @@ def save_changes(parallel):
     for metagroup in Metagroups.select():
         if not (Subjects.get(id=metagroup.subject_name).name in meta_data):
             meta_data[Subjects.get(id=metagroup.subject_name).name] = dict()
+
         if not (metagroup.meta_name in meta_data[Subjects.get(id=metagroup.subject_name).name]):
             meta_data[Subjects.get(id=metagroup.subject_name).name][metagroup.meta_name] = dict()
             meta_data[Subjects.get(id=metagroup.subject_name).name][metagroup.meta_name]['classes'] = Classes.get(
@@ -62,6 +63,19 @@ def save_changes(parallel):
         else:
             meta_data[Subjects.get(id=metagroup.subject_name).name][metagroup.meta_name]['classes'] += \
                 f"_{Classes.get(id=metagroup.class_id).name}"
-    for subject, metagroup in meta_data.items():
-        print(subject, metagroup)
+    # for subject, metagroup in meta_data.items():
+    #     print(subject, metagroup)
+
+    nagruzka = []
+
+    for subject, groups in meta_data.items():
+        for meta_name, group in groups.items():
+            nagruzka.append({
+                'subject': subject,
+                'meta_name': meta_name,
+                'classes': group.get('classes')
+            })
+    for item in nagruzka:
+        print(item)
+        # if Nagruzka.select().where(Nagruzka.meta_name == item.get('meta_name')).where(Nagruzka.subject_name == item.get('subject')):
     return Response(status=200)

@@ -20,7 +20,6 @@ class Parallels(BaseModel):
 
 
 class Classes(BaseModel):
-    id = PrimaryKeyField()
     name = CharField(max_length=255)
     parallel = ForeignKeyField(Parallels, backref="parallel_classes")
     students_num = IntegerField()
@@ -31,23 +30,21 @@ class Subjects(BaseModel):
 
 
 class Stuff(BaseModel):
-    id = PrimaryKeyField()
     name = CharField()
     # position = CharField()
 
 
 class Metagroups(BaseModel):
-    id = PrimaryKeyField()
     class_id = ForeignKeyField(Classes, backref="class_metagroups")
     subject_name = ForeignKeyField(Subjects, backref="subject_metagroups")
     meta_name = CharField(max_length=255)
 
 
 class Nagruzka(BaseModel):
-    id = PrimaryKeyField()
     subject_name = ForeignKeyField(Subjects, backref="subject_metagrops")
     stuff_id = ForeignKeyField(Stuff, backref="stuff_nagruzka", null=False)
     meta_name = ForeignKeyField(Metagroups, backref="meta_nagruzka")
+    classes = CharField()
 
 
 def initialize_db():

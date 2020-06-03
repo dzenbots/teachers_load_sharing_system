@@ -52,6 +52,7 @@ class Nagruzka(BaseModel):
     subject_name = ForeignKeyField(Subjects, backref="subject_metagrops")
     stuff_id = ForeignKeyField(Stuff, backref="stuff_nagruzka", null=False)
     meta_name = ForeignKeyField(Metagroups, backref="meta_nagruzka")
+    classes = CharField()
 
 
 def initialize_db():
