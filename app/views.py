@@ -15,7 +15,8 @@ def check_user_valid(original_function):
     return wrapper
 
 
-main = Blueprint('main', __name__)
+main = Blueprint('main', __name__, url_prefix='', static_folder='static',
+                        template_folder='templates')
 
 
 @main.errorhandler(404)

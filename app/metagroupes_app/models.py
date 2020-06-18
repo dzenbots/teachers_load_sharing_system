@@ -43,6 +43,12 @@ class Metagroups(BaseModel):
     meta_name = CharField(max_length=255)
 
 
+class MetaNagruzka(BaseModel):
+    meta_name = CharField(max_length=255)
+    classes_names = CharField(max_length=255)
+    subject_name = ForeignKeyField(Subjects, backref="subject_metanagruzka")
+
+
 def initialize_db():
     db.connect()
     db.create_tables(
