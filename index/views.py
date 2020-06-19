@@ -1,6 +1,7 @@
 from flask import render_template
 
-from index import app, check_user_valid
+from index import app
+from login_app import check_user_valid
 
 
 @app.errorhandler(404)
