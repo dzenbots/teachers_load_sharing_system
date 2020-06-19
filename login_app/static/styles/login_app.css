@@ -1,10 +1,11 @@
+
 .cover {
     background-size: cover;
     height: 80%;
     text-align: center;
     display: flex;
     align-items: center;
-    vertical-align: center;
+    vertical-align: auto;
     position: relative;
 }
 

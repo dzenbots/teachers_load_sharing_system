@@ -3,7 +3,7 @@ from functools import wraps
 from flask import Flask, session, url_for
 from werkzeug.utils import redirect
 
-from login import login_app
+from login_app import login_app
 
 app = Flask(__name__)
 app.config.from_pyfile('settings.py')
