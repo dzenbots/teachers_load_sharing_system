@@ -15,16 +15,16 @@
     <link href="{{ url_for('static', filename='styles/base_style.css') }}"
           rel="stylesheet"
           type="text/css"/>
-
+    <script type="text/javascript" src="{{ url_for('static', filename='scripts/http_requests.js') }}"></script>
     {% block static_files %}{% endblock %}
 </head>
 <body>
 {% block navbar_content %}
 {% include 'navbar.html' %}
 {% endblock %}
-
+<div id="main_div" class="fluid_container">
 {% block main_content %}{% endblock %}
-
+</div>
 {% block footer_content %}
 {% if 'valid_user' in session %}
 <footer>
@@ -46,21 +46,5 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
         integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
         crossorigin="anonymous"></script>
-<script>
- function httpGet(theUrl)
-{
-    var xmlHttp = new XMLHttpRequest();
-    xmlHttp.open( "GET", theUrl, true ); // false for synchronous request
-    xmlHttp.onload = function() {
-        if (xmlHttp.status != 200){
-
-        } else {
-            document.getElementById("main_div").innerHTML = xmlHttp.response;
-        }
-    }
-    xmlHttp.send(  );
-}
-
-</script>
 </body>
 </html>

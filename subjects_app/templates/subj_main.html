@@ -1,95 +1,96 @@
-
 {% if 'valid_user' in session %}
 <header>
-        <button type="button" class="btn btn-primary btn-md" data-toggle="modal" data-target="#subjects_add_new_record">Добавить предмет</button>
-    </header>
+    <button type="button" class="btn btn-primary btn-md" data-toggle="modal" data-target="#subjects_add_new_record">
+        Добавить предмет
+    </button>
+</header>
 <main>
-        <iframe name="subjects_hidden_iframe" style="display: none;"></iframe>
-        <div class="base_fluid_container">
-            <div class="container-fluid">
-                <div class="row justify-content-center">
-                    <div class="col-4 justify-content-center">
-                        <div class="container-fluid">
-                            <div class="subjects_main_container">
-                                {% if subjects %}
-                                <table class="table table-striped">
-                                    {% if table_info %}
-                                        <thead class="thead-dark">
-                                            <tr>
-                                                {% for item in range(1, table_info|length) %}
-                                                <th scope="col" class="text-center align-middle">
-                                                    {{ table_info[item] }}
-                                                </th>
-                                                {% endfor %}
-                                            </tr>
-                                        </thead>
-                                    {% endif %}
-                                        <tbody>
-                                            {% for subject in subjects %}
-                                                <tr>
-                                                    <form   id="{{ 'subject_form_{}'.format(subject.id) }}"
-                                                                action="/subjects_app/update_record/{{ subject.id }}"
-                                                                method="post"
-                                                                class="justify-content-center"
-                                                                target="subjects_hidden_iframe"
-                                                                >
-                                                        <td scope="col justify-content-center">
-
-                                                                    <input  type="text"
-                                                                            name="{{ 'id_{}'.format(subject.id) }}"
-                                                                            class="form-control no-border"
-                                                                            value="{{ subject.name }}"
-                                                                            onchange="submit()"
-                                                                            required
-                                                                    >
-                                                        </td>
-                                                    </form>
-                                            {% endfor %}
-                                        </tbody>
-                                </table>
-                                {% endif %}
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- HTML-код модального окна -->
-        <div id="subjects_add_new_record" class="modal fade">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <!-- Заголовок модального окна -->
-                    <div class="modal-header">
-                        <h4 class="modal-title">Добавление предмета</h4>
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    </div>
-                    <!-- Основное содержимое модального окна -->
-                    <div class="modal-body">
-                        <form id='add_new_record'
-                              action="/subjects_app/add_new_record"
-                              method="post"
-                              class="justify-content-center">
-                            <table class="table table-bordered">
+    <iframe name="subjects_hidden_iframe" style="display: none;"></iframe>
+    <div class="base_fluid_container">
+        <div class="container-fluid">
+            <div class="row justify-content-center">
+                <div class="col-4 justify-content-center">
+                    <div class="container-fluid">
+                        <div class="subjects_main_container">
+                            {% if subjects %}
+                            <table class="table table-striped">
+                                {% if table_info %}
+                                <thead class="thead-dark">
                                 <tr>
-                                    <td scope="col">
-                                        <input type="text"
-                                               name="subject_add_new"
-                                               class="form-control no-border"
-                                               placeholder="Название предмета"
-                                               required>
-                                    </td>
+                                    {% for item in range(1, table_info|length) %}
+                                    <th scope="col" class="text-center align-middle">
+                                        {{ table_info[item] }}
+                                    </th>
+                                    {% endfor %}
                                 </tr>
+                                </thead>
+                                {% endif %}
+                                <tbody>
+                                {% for subject in subjects %}
+                                <tr>
+                                    <form id="{{ 'subject_form_{}'.format(subject.id) }}"
+                                          action="/subjects_app/update_record/{{ subject.id }}"
+                                          method="post"
+                                          class="justify-content-center"
+                                          target="subjects_hidden_iframe"
+                                    >
+                                        <td scope="col justify-content-center">
+
+                                            <input type="text"
+                                                   name="{{ 'id_{}'.format(subject.id) }}"
+                                                   class="form-control no-border"
+                                                   value="{{ subject.name }}"
+                                                   onchange="submit()"
+                                                   required
+                                            >
+                                        </td>
+                                    </form>
+                                    {% endfor %}
+                                </tbody>
                             </table>
-                        </form>
+                            {% endif %}
+                        </div>
                     </div>
-                    <!-- Футер модального окна -->
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Закрыть</button>
-                        <button form="add_new_record" type="submit" class="btn btn-primary">Сохранить</button>
-                    </div>
+
                 </div>
             </div>
         </div>
-    </main>
+    </div>
+    <!-- HTML-код модального окна -->
+    <div id="subjects_add_new_record" class="modal fade">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <!-- Заголовок модального окна -->
+                <div class="modal-header">
+                    <h4 class="modal-title">Добавление предмета</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                </div>
+                <!-- Основное содержимое модального окна -->
+                <div class="modal-body">
+                    <form id='add_new_record'
+                          action="/subjects_app/add_new_record"
+                          method="post"
+                          class="justify-content-center">
+                        <table class="table table-bordered">
+                            <tr>
+                                <td scope="col">
+                                    <input type="text"
+                                           name="subject_add_new"
+                                           class="form-control no-border"
+                                           placeholder="Название предмета"
+                                           required>
+                                </td>
+                            </tr>
+                        </table>
+                    </form>
+                </div>
+                <!-- Футер модального окна -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Закрыть</button>
+                    <button form="add_new_record" type="submit" class="btn btn-primary">Сохранить</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
 {% endif %}

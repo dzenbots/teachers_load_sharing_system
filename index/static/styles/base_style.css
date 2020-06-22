@@ -1,14 +1,11 @@
 
-body {
+#main_div {
+    height: calc(100vh - 100px);
     display: flex;
     flex-direction: column;
 }
 
-.base_fluid_container {
-    height: calc(100vh - 100px);
-}
-
-.base_fluid_container::-webkit-scrollbar {
+#main_div::-webkit-scrollbar {
     display: none;
 }
 
