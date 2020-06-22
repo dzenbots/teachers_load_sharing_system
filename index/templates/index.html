@@ -1,10 +1,29 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Index</title>
-</head>
-<body>
-    <h1>123</h1>
-</body>
-</html>
+{% extends 'base.html' %}
+
+{% block title %} Система распределения нагрузки {% endblock %}
+
+{% block static_files %}
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/main_app.css') }}"/>
+{% endblock %}
+
+{% block main_content %}
+
+    {% if 'valid_user' in session %}
+        <div id="main_div">
+            <div class="base_fluid_container">
+                <div class="div_background">
+
+                </div>
+            </div>
+        </div>
+    {% endif %}
+
+{% endblock %}
+
+{% block footer_content %}
+    <footer>
+        <div class="main_footer">
+            <div>Пользователь: {{ session.get('login') }} <a href="/login_app/logout" class="btn btn-secondary" role="button" style="margin-left: 20px;">Выход</a></div>
+        </div>
+    </footer>
+{% endblock %}

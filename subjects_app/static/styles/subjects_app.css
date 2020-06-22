@@ -1,0 +1,26 @@
+
+.subjects_main_container {
+    overflow: auto;
+    overflow-y: scroll;
+    max-height: calc(100vh - 140px);
+    min-height: calc(100vh - 140px);
+    min-width: 100%;
+    max-width: 100%;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+.subjects_main_container::-webkit-scrollbar {
+    display: none;
+}
+
+.subjects_adding_tr {
+    margin-bottom: 10px;
+}
+
+.no-border {
+    border: 0;
+    box-shadow: none; /* You may want to include this as bootstrap applies these styles too */
+    background: transparent;
+}

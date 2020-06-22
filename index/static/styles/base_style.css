@@ -5,7 +5,7 @@ body {
 }
 
 .base_fluid_container {
-    height: calc(100vh - 140px);
+    height: calc(100vh - 100px);
 }
 
 .base_fluid_container::-webkit-scrollbar {
