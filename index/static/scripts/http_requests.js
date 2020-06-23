@@ -11,3 +11,5 @@ function httpGet(theUrl)
     }
     xmlHttp.send();
 }
+
+function httpPost(theUrl)

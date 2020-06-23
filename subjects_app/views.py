@@ -39,7 +39,7 @@ def show_subjects():
 @check_user_valid
 def add_new_subject():
     Subjects.get_or_create(name=request.form.get('subject_add_new'))
-    return redirect(url_for('subjects_app.show_subjects'))
+    return show_subjects()
 
 
 @subjects_app.route('/update_record/<record_id>', methods=['POST'])
