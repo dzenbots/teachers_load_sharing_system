@@ -5,52 +5,54 @@
     </button>
 </header>
 <iframe name="subjects_hidden_iframe" style="display: none;"></iframe>
-<div class="row justify-content-center">
-    <div class="col-4 justify-content-center">
-        <div class="container-fluid">
-            <div class="subjects_main_container">
-                {% if subjects %}
-                <table class="table table-striped">
-                    {% if table_info %}
-                    <thead class="thead-dark">
-                    <tr>
-                        {% for item in range(1, table_info|length) %}
-                        <th scope="col" class="text-center align-middle">
-                            {{ table_info[item] }}
-                        </th>
-                        {% endfor %}
-                    </tr>
-                    </thead>
-                    {% endif %}
-                    <tbody>
-                    {% for subject in subjects %}
-                    <tr>
-                        <form id="{{ 'subject_form_{}'.format(subject.id) }}"
-                              action="/subjects_app/update_record/{{ subject.id }}"
-                              method="post"
-                              class="justify-content-center"
-                              target="subjects_hidden_iframe"
-                        >
-                            <td scope="col justify-content-center">
-
-                                <input type="text"
-                                       name="{{ 'id_{}'.format(subject.id) }}"
-                                       class="form-control no-border"
-                                       value="{{ subject.name }}"
-                                       onchange="submit()"
-                                       required
-                                >
-                            </td>
-                        </form>
-                        {% endfor %}
-                    </tbody>
-                </table>
+<div class="row justify-content-center full_size">
+    <div class="col-4">
+        <div id="subjects_div" name="subjects_div" class="container-fluid full_size overflowed">
+            {% if subjects %}
+            <table class="table table-striped">
+                {% if table_info %}
+                <thead class="thead-dark">
+                <tr>
+                    {% for item in range(1, table_info|length) %}
+                    <th scope="col" class="text-center align-middle">
+                        {{ table_info[item] }}
+                    </th>
+                    {% endfor %}
+                </tr>
+                </thead>
                 {% endif %}
-            </div>
-        </div>
+                <tbody style="padding-bottom: 20px; margin-bottom: 20px;">
+                {% for subject in subjects %}
+                <tr>
+                    <form id="{{ 'subject_form_{}'.format(subject.id) }}"
+                          name="{{ 'subject_form_{}'.format(subject.id) }}"
+                          action="/subjects_app/update_record/{{ subject.id }}"
+                          method="post"
+                          class="justify-content-center"
+                          target="subjects_hidden_iframe"
+                    >
+                        <td scope="col justify-content-center">
 
+                            <input type="text"
+                                   name="{{ 'id_{}'.format(subject.id) }}"
+                                   class="form-control no-border"
+                                   value="{{ subject.name }}"
+                                   onchange="submit()"
+                                   form="{{ 'subject_form_{}'.format(subject.id) }}"
+                                   required
+                            >
+                        </td>
+                    </form>
+                    {% endfor %}
+                </tr>
+                <tr><td><p></p></td></tr>
+                </tbody>
+            </table>
+            {% endif %}
+        </div>
     </div>
 </div>
+
 <!-- HTML-код модального окна -->
 <div id="subjects_add_new_record" class="modal fade">
     <div class="modal-dialog">
@@ -62,11 +64,12 @@
             </div>
             <!-- Основное содержимое модального окна -->
             <div class="modal-body">
-                <form id='add_new_record'
-                      action="/subjects_app/add_new_record"
+                <form id='add_subject'
+                      name='add_subject'
                       method="post"
                       class="justify-content-center"
-                      target="main_div">
+                      action="/subjects_app/add_new_record"
+                      onsubmit="return false;">
                     <table class="table table-bordered">
                         <tr>
                             <td scope="col">
@@ -83,7 +86,8 @@
             <!-- Футер модального окна -->
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Закрыть</button>
-                <button form="add_new_record" type="submit" class="btn btn-primary" formtarget="main_div">Сохранить</button>
+                <a data-dismiss="modal" href="#" class="btn btn-primary"
+                   onclick="httpPost('/subjects_app/add_new_record', document.forms.add_subject)">Сохранить</a>
             </div>
         </div>
     </div>

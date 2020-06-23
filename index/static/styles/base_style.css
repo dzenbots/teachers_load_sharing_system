@@ -1,11 +1,13 @@
 
 #main_div {
+
     height: calc(100vh - 100px);
+    max-height: calc(100vh - 100px);
     display: flex;
     flex-direction: column;
 }
 
-#main_div::-webkit-scrollbar {
+body::-webkit-scrollbar {
     display: none;
 }
 
@@ -29,4 +31,19 @@ footer {
 .main_footer div {
     margin-left: auto;
     margin-right: 15px;
+}
+
+
+.full_size {
+    min-height: calc(100vh - 100px);
+    max-height: calc(100vh - 100px);
+}
+
+.overflowed {
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
+.overflowed::-webkit-scrollbar {
+    display: none;
 }

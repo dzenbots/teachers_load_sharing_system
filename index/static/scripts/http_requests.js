@@ -1,4 +1,4 @@
-function httpGet(theUrl)
+function httpGet(theUrl, div_id)
 {
     var xmlHttp = new XMLHttpRequest();
     xmlHttp.open( "GET", theUrl, true ); // false for synchronous request
@@ -6,10 +6,23 @@ function httpGet(theUrl)
     {
         if (xmlHttp.status == 200)
         {
-            document.getElementById("main_div").innerHTML = xmlHttp.response;
+            document.getElementById(div_id).innerHTML = xmlHttp.response;
         }
     }
     xmlHttp.send();
 }
 
-function httpPost(theUrl)
+
+function httpPost(theUrl, formObj){
+    var formData = new FormData(formObj)
+    var xmlHttp = new XMLHttpRequest();
+    xmlHttp.open( "POST", theUrl, true ); // false for synchronous request
+    xmlHttp.onload = function()
+    {
+        if (xmlHttp.status == 200)
+        {
+            alert("Данные сохранены")
+        }
+    }
+    xmlHttp.send(formData);
+}

@@ -2,8 +2,8 @@
 .subjects_main_container {
     overflow: auto;
     overflow-y: scroll;
-    max-height: calc(100vh - 140px);
-    min-height: calc(100vh - 140px);
+    max-height: calc(100vh - 100px);
+    min-height: calc(100vh - 100px);
     min-width: 100%;
     max-width: 100%;
     display: flex;
@@ -23,4 +23,18 @@
     border: 0;
     box-shadow: none; /* You may want to include this as bootstrap applies these styles too */
     background: transparent;
+}
+
+.full_size {
+    min-height: calc(100vh - 100px);
+    max-height: calc(100vh - 100px);
+}
+
+.overflowed {
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
+.overflowed::-webkit-scrollbar {
+    display: none;
 }
